@@ -1,0 +1,28 @@
+🚀 How to Get Started
+
+  cd "/Users/buzz/Documents/Adnan/AI Automation/ai-marketing-system"
+
+  # Setup Backend
+  cd backend
+  python -m venv venv
+  source venv/bin/activate
+  pip install -r requirements.txt
+  cp ../.env.example .env
+  uvicorn main:app --reload --host 0.0.0.0 --port 8000
+  # Edit .env with your OpenRouter API key and SMTP credentials
+
+  # Setup Frontend (in new terminal)
+  cd frontend
+  npm install
+
+  # Run Application
+  # Terminal 1: cd backend && source venv/bin/activate && python main.py
+  # Terminal 2: cd frontend && npm run dev
+
+
+
+❌ SMS campaign support
+❌ Multi-user accounts
+❌ Shopify API integration (config present but not implemented)
+❌ Meta Business Suite integration (config present but not implemented)
+❌ Video generation - Experimental tech, too expensive

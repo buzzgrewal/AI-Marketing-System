@@ -1,0 +1,42 @@
+# FastAPI and server
+fastapi
+uvicorn[standard]
+python-multipart
+
+# Database
+sqlalchemy
+alembic
+psycopg2-binary
+
+# Authentication & Security
+python-jose[cryptography]
+passlib[bcrypt]
+python-dotenv
+pydantic
+pydantic-settings
+
+# AI & OpenRouter
+openai
+httpx
+pillow
+
+# Email
+aiosmtplib
+email-validator
+
+# Data processing
+pandas
+openpyxl
+
+# HTTP requests
+requests
+aiofiles
+
+# Utilities
+python-slugify
+validators
+
+# Testing
+pytest
+pytest-asyncio
+httpx

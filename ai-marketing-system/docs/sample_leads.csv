@@ -1,0 +1,7 @@
+email,first_name,last_name,phone,location,sport_type,customer_type
+john.athlete@example.com,John,Smith,555-0100,California,cycling,athlete
+sarah.coach@example.com,Sarah,Johnson,555-0101,Texas,triathlon,coach
+mike.runner@example.com,Mike,Williams,555-0102,New York,running,athlete
+emily.fitter@example.com,Emily,Brown,555-0103,Florida,cycling,bike_fitter
+david.team@example.com,David,Davis,555-0104,Colorado,triathlon,team
+lisa.athlete@example.com,Lisa,Miller,555-0105,Oregon,running,athlete
