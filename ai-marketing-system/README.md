@@ -8,30 +8,64 @@ A comprehensive, compliant AI-powered marketing automation platform designed spe
 
 ### Lead Management
 - **Import & Organize**: Import leads from CSV/Excel with consent tracking
-- **Segmentation**: Filter by sport type, customer type, and consent status
+- **Advanced Segmentation**: Create complex segments with multiple conditions and AND/OR logic
+- **Dynamic Segments**: Auto-updating segments that refresh as leads change
 - **Compliance-First**: Built-in consent management (CAN-SPAM, GDPR, CCPA compliant)
 - **Manual Entry**: Add individual leads with complete control over consent
+- **Segment Preview**: Preview matching leads before saving segments
 
 ### AI Content Generation
 - **Social Media Posts**: Generate engaging posts for Facebook, Instagram, Twitter, LinkedIn
 - **Email Templates**: Create professional email marketing content
 - **Ad Copy**: Generate compelling ad copy for paid advertising
 - **Multiple Tones**: Professional, casual, friendly, or enthusiastic
-- **Image Prompts**: AI-generated prompts for image creation
+- **Image Generation**: AI-powered image creation with DALL-E 3 and Stable Diffusion
+- **Image Enhancement**: Improve existing images with AI
 - **Content Improvement**: Enhance existing content for better engagement
 
 ### Email Campaigns
-- **Targeted Campaigns**: Send to specific segments (sport type, status, etc.)
+- **Targeted Campaigns**: Send to advanced segments or sport types
+- **Custom Templates**: Build reusable email templates with variables
+- **Template Variables**: Dynamic content with {{name}}, {{sport_type}}, etc.
 - **Consent Verification**: Only sends to opted-in contacts
 - **Performance Tracking**: Monitor opens, clicks, conversions
-- **Professional Templates**: Branded email templates included
+- **A/B Testing**: Test subject lines, content, templates, and sender names
+- **Statistical Analysis**: Automatic winner selection based on performance
 - **Background Processing**: Efficient bulk email sending
 
+### Social Media Management
+- **Multi-Platform Scheduling**: Schedule posts to Facebook, Instagram, Twitter, LinkedIn
+- **Content Calendar**: Visual calendar view of scheduled posts
+- **Best Time Suggestions**: AI-powered posting time recommendations
+- **Draft Management**: Save and schedule posts for later
+- **Bulk Scheduling**: Schedule multiple posts at once
+- **Platform Status**: Monitor connection status for each platform
+- **Engagement Tracking**: Track likes, comments, shares, and reach
+
+### A/B Testing
+- **Test Types**: Subject lines, content, templates, sender names
+- **Multi-Variant**: Test 2-5 variants simultaneously
+- **Sample Size Control**: Configure test percentage (1-100%)
+- **Success Metrics**: Optimize for open rate, click rate, or conversion rate
+- **Auto Winner Selection**: Automatically declare winner when statistically significant
+- **Results Analysis**: Detailed performance comparison and insights
+
+### Webhook Integration
+- **Real-time Tracking**: Receive events from email providers automatically
+- **Multi-Provider Support**: SendGrid, Mailchimp, Mailgun, and custom webhooks
+- **Event Types**: Track opens, clicks, bounces, deliveries, unsubscribes
+- **Automatic Updates**: Campaign and A/B test metrics update automatically
+- **Security**: HMAC signature verification for webhook authenticity
+- **Event Logs**: View and reprocess webhook events
+- **Test Functionality**: Send test events to verify webhook configuration
+
 ### Analytics Dashboard
-- **Real-time Metrics**: Track leads, campaigns, and content performance
+- **Real-time Metrics**: Track leads, campaigns, segments, and content performance
 - **Visual Reports**: Charts and graphs for easy insights
 - **Campaign Performance**: Open rates, click rates, conversion tracking
 - **Content Analytics**: Engagement metrics for social media posts
+- **A/B Test Results**: Statistical analysis and improvement tracking
+- **Webhook Statistics**: Event processing and failure monitoring
 - **AI-powered Insights**: Actionable recommendations
 
 ## 🛠 Technology Stack
@@ -147,25 +181,99 @@ Frontend will run on `http://localhost:3000`
    - **Important**: Only import contacts who have given explicit consent
    - Confirm consent checkbox before importing
 
-3. **Generate Content**
+3. **Create Segments** (Optional)
+   - Go to "Segments" section
+   - Click "New Segment"
+   - Add conditions (sport_type, location, customer_type, etc.)
+   - Choose AND/OR logic for multiple conditions
+   - Preview matching leads
+   - Save as dynamic (auto-updating) or static segment
+
+4. **Build Email Templates** (Optional)
+   - Go to "Email Templates"
+   - Click "New Template"
+   - Design your template with variables like {{name}}, {{sport_type}}
+   - Add filters like {{name|capitalize}}
+   - Preview with sample data
+   - Save for reuse across campaigns
+
+5. **Generate Content**
    - Go to "Content Generator"
    - Click "Generate Content"
    - Choose content type (social post, email, ad copy)
    - Fill in topic and details
+   - Generate images with AI if needed
    - Review and approve generated content
+   - Schedule directly to social media
 
-4. **Create Campaign**
+6. **Create Campaign**
    - Go to "Campaigns"
    - Click "New Campaign"
-   - Set campaign name and email content
-   - Choose target segment (optional)
+   - Choose between custom content or template
+   - Select target segment or sport type
    - Send to opted-in leads
+   - Or create A/B test to optimize performance
 
-5. **Track Performance**
+7. **Set Up A/B Tests**
+   - Go to "A/B Testing"
+   - Click "New A/B Test"
+   - Select campaign and test type
+   - Create 2-5 variants
+   - Set sample size and success metric
+   - Let system auto-select winner or declare manually
+
+8. **Configure Webhooks** (Optional)
+   - Go to "Webhooks"
+   - Click "New Webhook"
+   - Select provider (SendGrid, Mailchimp, etc.)
+   - Choose event type to track
+   - Copy webhook URL
+   - Configure in your email service provider
+   - Receive real-time event tracking
+
+9. **Track Performance**
    - View "Analytics" dashboard
    - Monitor campaign performance
-   - Review lead statistics
+   - Review A/B test results
+   - Check webhook event logs
+   - Review lead and segment statistics
    - Get AI-powered insights
+
+### Advanced Feature Tips
+
+**Email Templates:**
+- Use variables for personalization: `{{name}}`, `{{sport_type}}`, `{{location}}`
+- Apply filters: `{{name|capitalize}}`, `{{sport_type|upper}}`
+- Set defaults: `{{first_name|default:"Athlete"}}`
+- Categories: promotional, transactional, newsletter, announcement
+
+**Segmentation:**
+- Dynamic segments auto-update as leads change
+- Static segments stay fixed (good for historical campaigns)
+- Use AND logic for precise targeting, OR for broader reach
+- Preview segments before using in campaigns
+- Combine multiple conditions for advanced targeting
+
+**A/B Testing:**
+- Test one element at a time for clear insights
+- Use at least 100 recipients per variant for statistical significance
+- Let tests run for 24-48 hours before declaring winner
+- Subject line tests typically show fastest results
+- Auto-winner selection needs minimum 50 total recipients
+
+**Social Media Scheduling:**
+- Schedule posts during peak engagement times
+- Use bulk scheduling for content calendar planning
+- Draft posts for review before scheduling
+- Schedule from AI-generated content with one click
+- Track engagement metrics for each post
+
+**Webhooks:**
+- Configure webhooks for real-time tracking instead of manual updates
+- Use signature verification for security
+- Test webhooks before going live
+- Monitor failed events and reprocess as needed
+- Supported providers: SendGrid, Mailchimp, Mailgun
 
 ### CSV Import Format
 
@@ -227,6 +335,14 @@ Once the backend is running, visit:
 - `POST /api/leads/` - Create lead
 - `PUT /api/leads/{id}` - Update lead
 - `POST /api/leads/import` - Import from CSV
+- `GET /api/leads/stats/overview` - Lead statistics
+
+**Segments:**
+- `GET /api/segments/` - List all segments
+- `POST /api/segments/` - Create segment
+- `GET /api/segments/{id}/preview` - Preview segment leads
+- `POST /api/segments/{id}/refresh` - Refresh segment count
+- `GET /api/segments/fields/available` - Get available fields
 
 **Content:**
 - `POST /api/content/generate` - Generate AI content
@@ -234,27 +350,80 @@ Once the backend is running, visit:
 - `PUT /api/content/{id}` - Update content
 - `POST /api/content/improve/{id}` - Improve content
 
+**Email Templates:**
+- `GET /api/templates/` - List templates
+- `POST /api/templates/` - Create template
+- `POST /api/templates/render` - Preview template
+- `GET /api/templates/variables/list` - Get available variables
+
 **Campaigns:**
 - `POST /api/campaigns/` - Create campaign
 - `POST /api/campaigns/{id}/send` - Send campaign
-- `GET /api/campaigns/{id}/stats` - Get stats
+- `GET /api/campaigns/{id}/stats` - Get campaign stats
+- `GET /api/campaigns/stats/overview` - Overall stats
+
+**A/B Testing:**
+- `GET /api/ab-tests/` - List A/B tests
+- `POST /api/ab-tests/` - Create A/B test
+- `POST /api/ab-tests/{id}/start` - Start test
+- `GET /api/ab-tests/{id}/results` - Get test results
+- `POST /api/ab-tests/{id}/declare-winner` - Declare winner
+
+**Social Media Scheduling:**
+- `GET /api/schedule/` - List scheduled posts
+- `POST /api/schedule/` - Schedule post
+- `POST /api/schedule/from-content` - Schedule from generated content
+- `GET /api/schedule/calendar` - Get calendar view
+- `POST /api/schedule/{id}/post-now` - Post immediately
+
+**Webhooks:**
+- `GET /api/webhooks/` - List webhooks
+- `POST /api/webhooks/` - Create webhook
+- `GET /api/webhooks/{id}/events` - Get webhook events
+- `POST /api/webhooks/{id}/test` - Send test event
+- `GET /api/webhooks/providers` - List supported providers
 
 ## 💰 Cost Estimates
 
 ### Monthly Operating Costs
 
 **AI Content Generation (OpenRouter):**
-- Light usage (50 generations/month): ~$5-10
-- Medium usage (200 generations/month): ~$20-30
-- Heavy usage (500+ generations/month): ~$50-100
+- Text Generation (Claude 3.5 Sonnet):
+  - Light usage (50 generations/month): ~$5-10
+  - Medium usage (200 generations/month): ~$20-30
+  - Heavy usage (500+ generations/month): ~$50-100
+- Image Generation (DALL-E 3 / Stable Diffusion):
+  - Per image: ~$0.04-0.08
+  - 50 images/month: ~$2-4
+  - 200 images/month: ~$8-16
 
 **Email Service (SMTP):**
 - Gmail/Google Workspace: Free (up to 500/day)
 - SendGrid Free Tier: 100 emails/day
+- SendGrid Essentials: $19.95/month (up to 100k emails)
 - Mailgun: $0.80 per 1,000 emails
 
-**Total Estimated Cost: $0-150/month**
+**Webhook Integration:**
+- SendGrid/Mailchimp/Mailgun: Free (included with email service)
+- Real-time event tracking: No additional cost
+
+**Social Media Platforms:**
+- Facebook/Instagram/Twitter/LinkedIn API: Free
+- Note: Currently using mock API - direct integration requires app approval
+
+**Database & Hosting:**
+- Local SQLite: Free
+- Cloud hosting (optional): $5-50/month depending on provider
+
+**Total Estimated Cost: $0-200/month**
 (Depends on usage volume and chosen services)
+
+**Cost-Saving Tips:**
+- Start with free tiers to test
+- Use image generation sparingly
+- Batch email sends to reduce costs
+- Monitor OpenRouter usage dashboard
+- Consider PostgreSQL for production
 
 ## 🔧 Configuration
 
@@ -351,16 +520,24 @@ This project is proprietary software developed for marketing automation purposes
 
 ## 🎯 Roadmap
 
-Future enhancements:
+**Recently Completed:**
+- [✅] Custom email templates builder
+- [✅] Social media scheduling integration
+- [✅] Advanced segmentation with dynamic filtering
+- [✅] A/B testing for campaigns
+- [✅] Webhook support for tracking
+
+**Planned Enhancements:**
 - [ ] SMS campaign support
-- [ ] Social media scheduling integration
-- [ ] A/B testing for campaigns
-- [ ] Advanced segmentation
-- [ ] Webhook support for tracking
-- [ ] Multi-user accounts
-- [ ] Custom email templates builder
-- [ ] Integration with Shopify API
+- [ ] Multi-user accounts with team management
+- [ ] Integration with Shopify API for e-commerce
 - [ ] Integration with Meta Business Suite
+- [ ] Direct social media API integration (Facebook, Twitter, LinkedIn)
+- [ ] Advanced analytics with predictive insights
+- [ ] Mobile app for on-the-go management
+- [ ] CRM integration (Salesforce, HubSpot)
+- [ ] Marketing automation workflows
+- [ ] Lead scoring and qualification
 
 ---
 
