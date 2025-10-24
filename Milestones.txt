@@ -1,0 +1,5 @@
+Milestone 1 Audit both Shopify stores, install Meta Pixel, GA4, Tag Manager, and connect AI tools. You’ll see the test pipeline running.
+
+Milestone 2  Full AI automation build: lead sourcing, outreach generation, ad retargeting, and Shopify integration. System starts generating and tracking live leads.
+
+Milestone 3  Final optimization, clean handover, and one-month support to make sure everything’s stable and converting.

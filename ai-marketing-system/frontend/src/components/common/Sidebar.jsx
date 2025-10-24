@@ -10,6 +10,7 @@ import {
   Filter,
   FlaskConical,
   Webhook,
+  Store,
   X,
 } from 'lucide-react'
 
@@ -23,6 +24,7 @@ const navigation = [
   { name: 'Email Templates', href: '/templates', icon: FileText },
   { name: 'Social Scheduling', href: '/scheduling', icon: Calendar },
   { name: 'Webhooks', href: '/webhooks', icon: Webhook },
+  { name: 'Shopify', href: '/shopify', icon: Store },
   { name: 'Analytics', href: '/analytics', icon: BarChart3 },
 ]
 

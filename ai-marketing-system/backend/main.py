@@ -6,7 +6,7 @@ import os
 from app.core.config import settings
 from app.db.base import Base
 from app.db.session import engine
-from app.api.routes import auth, leads, campaigns, content, email_templates, social_scheduling, segments, ab_tests, webhooks
+from app.api.routes import auth, leads, campaigns, content, email_templates, social_scheduling, segments, ab_tests, webhooks, shopify
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -41,6 +41,7 @@ app.include_router(social_scheduling.router, prefix="/api/schedule", tags=["Soci
 app.include_router(segments.router, prefix="/api/segments", tags=["Segments"])
 app.include_router(ab_tests.router, prefix="/api/ab-tests", tags=["A/B Testing"])
 app.include_router(webhooks.router, prefix="/api/webhooks", tags=["Webhooks"])
+app.include_router(shopify.router, prefix="/api/shopify", tags=["Shopify Integration"])
 
 
 @app.get("/")

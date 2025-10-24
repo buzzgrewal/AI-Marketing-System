@@ -12,6 +12,7 @@ import SchedulingPage from './pages/SchedulingPage'
 import SegmentsPage from './pages/SegmentsPage'
 import ABTestPage from './pages/ABTestPage'
 import WebhooksPage from './pages/WebhooksPage'
+import ShopifyPage from './pages/ShopifyPage'
 
 // Layout
 import Layout from './components/common/Layout'
@@ -32,6 +33,7 @@ function App() {
           <Route path="templates" element={<TemplatesPage />} />
           <Route path="scheduling" element={<SchedulingPage />} />
           <Route path="webhooks" element={<WebhooksPage />} />
+          <Route path="shopify" element={<ShopifyPage />} />
           <Route path="analytics" element={<AnalyticsPage />} />
         </Route>
 
