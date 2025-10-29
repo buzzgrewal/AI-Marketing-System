@@ -16,7 +16,7 @@ export default function ShopifyPage() {
 
   const fetchStores = async () => {
     try {
-      const response = await api.get('/shopify/stores');
+      const response = await api.get('/api/shopify/stores');
       setStores(response.data);
 
       // Auto-select first configured store
@@ -34,7 +34,7 @@ export default function ShopifyPage() {
   const auditStore = async (storeId) => {
     setLoading(true);
     try {
-      const response = await api.get(`/shopify/stores/${storeId}/audit`);
+      const response = await api.get(`/api/shopify/stores/${storeId}/audit`);
       setAuditData(response.data);
 
       if (response.data.configured && !response.data.error) {
@@ -68,7 +68,7 @@ export default function ShopifyPage() {
 
     setSyncing(true);
     try {
-      const response = await api.post(`/shopify/stores/${selectedStore.id}/sync-customers`);
+      const response = await api.post(`/api/shopify/stores/${selectedStore.id}/sync-customers`);
       const { synced, skipped, errors, total_processed } = response.data;
 
       toast.success(

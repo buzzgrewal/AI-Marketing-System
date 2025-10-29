@@ -459,7 +459,7 @@ async def get_scheduling_stats(
 @router.get("/platforms/status")
 async def get_platforms_status():
     """Get status of social media platform integrations"""
-    
+
     platforms = [
         {
             "name": "Facebook",
@@ -486,6 +486,37 @@ async def get_platforms_status():
             "features": ["posts", "images", "articles"]
         }
     ]
-    
+
     return {"platforms": platforms}
+
+
+@router.get("/meta/verify")
+async def verify_meta_integration():
+    """Verify Meta/Facebook access token and check permissions
+
+    This endpoint helps you verify that your Meta credentials are correctly configured
+    and shows what permissions you have.
+    """
+
+    result = await social_scheduler.verify_meta_token()
+
+    if not result['valid']:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Meta token verification failed: {result.get('error', 'Unknown error')}"
+        )
+
+    return {
+        "status": "success",
+        "message": "Meta integration is properly configured",
+        "details": {
+            "app_id": result.get('app_id'),
+            "page_id": result.get('page_id'),
+            "page_name": result.get('page_name'),
+            "instagram_enabled": result.get('instagram_enabled', False),
+            "instagram_account_id": result.get('instagram_account_id'),
+            "scopes": result.get('scopes', []),
+            "expires_at": result.get('expires_at')
+        }
+    }
 

@@ -47,6 +47,7 @@ class Settings(BaseSettings):
     META_APP_ID: str = ""
     META_APP_SECRET: str = ""
     META_ACCESS_TOKEN: str = ""
+    META_PIXEL_ID: str = ""  # Optional: For Meta Pixel tracking
 
     # Google Analytics
     GA_MEASUREMENT_ID: str = ""
