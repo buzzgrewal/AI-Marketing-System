@@ -179,43 +179,26 @@ export default function ContentPage() {
     }
   }
 
-  const handleDownloadImage = async (imageUrl, contentTitle) => {
+  const handleDownloadImage = (imageUrl, contentTitle) => {
     try {
-      toast.loading('Downloading image...')
-
-      // Fetch the image from backend
-      const fullUrl = `http://localhost:8000${imageUrl}`
-      const response = await fetch(fullUrl)
-
-      if (!response.ok) {
-        throw new Error('Failed to download image')
-      }
-
-      // Get the blob
-      const blob = await response.blob()
-
-      // Create a download link
-      const url = window.URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-
       // Generate filename from title or use default
       const filename = contentTitle
         ? `${contentTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.png`
         : `generated_image_${Date.now()}.png`
 
+      // Create a temporary link element
+      const link = document.createElement('a')
+      link.href = `http://localhost:8000${imageUrl}`
       link.download = filename
+      link.target = '_blank' // Open in new tab as fallback
+
+      // Append to body, click, and remove
       document.body.appendChild(link)
       link.click()
-
-      // Cleanup
       document.body.removeChild(link)
-      window.URL.revokeObjectURL(url)
 
-      toast.dismiss()
-      toast.success('Image downloaded successfully!')
+      toast.success('Image download started!')
     } catch (error) {
-      toast.dismiss()
       toast.error('Failed to download image')
       console.error('Download error:', error)
     }
