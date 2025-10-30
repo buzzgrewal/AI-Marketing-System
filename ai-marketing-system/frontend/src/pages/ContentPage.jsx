@@ -181,16 +181,15 @@ export default function ContentPage() {
 
   const handleDownloadImage = (imageUrl, contentTitle) => {
     try {
-      // Generate filename from title or use default
-      const filename = contentTitle
-        ? `${contentTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.png`
-        : `generated_image_${Date.now()}.png`
+      // Extract filename from the image URL (e.g., /uploads/generated_20251028_183015.png)
+      const filename = imageUrl.split('/').pop()
 
-      // Create a temporary link element
+      // Create a temporary link element to download via the new endpoint
       const link = document.createElement('a')
-      link.href = `http://localhost:8000${imageUrl}`
-      link.download = filename
-      link.target = '_blank' // Open in new tab as fallback
+      link.href = `http://localhost:8000/api/content/download-image/${filename}`
+      link.download = contentTitle
+        ? `${contentTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.png`
+        : filename
 
       // Append to body, click, and remove
       document.body.appendChild(link)

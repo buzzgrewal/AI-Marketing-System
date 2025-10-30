@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from datetime import datetime
+import os
 
 from app.db.session import get_db
 from app.models.content import GeneratedContent
@@ -13,6 +15,7 @@ from app.schemas.content import (
     ContentPerformanceUpdate
 )
 from app.core.security import get_current_active_user
+from app.core.config import settings
 from app.services.ai_content_generator import ai_content_generator
 
 router = APIRouter()
@@ -379,3 +382,28 @@ async def improve_content(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error improving content: {str(e)}"
         )
+
+
+@router.get("/download-image/{filename}")
+async def download_image(filename: str):
+    """Download generated image with proper Content-Disposition header"""
+
+    # Construct file path
+    file_path = os.path.join(settings.UPLOAD_DIR, filename)
+
+    # Check if file exists
+    if not os.path.exists(file_path):
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Image not found"
+        )
+
+    # Return file with download headers
+    return FileResponse(
+        path=file_path,
+        media_type="image/png",
+        filename=filename,
+        headers={
+            "Content-Disposition": f'attachment; filename="{filename}"'
+        }
+    )
