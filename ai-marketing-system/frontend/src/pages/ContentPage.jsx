@@ -179,6 +179,48 @@ export default function ContentPage() {
     }
   }
 
+  const handleDownloadImage = async (imageUrl, contentTitle) => {
+    try {
+      toast.loading('Downloading image...')
+
+      // Fetch the image from backend
+      const fullUrl = `http://localhost:8000${imageUrl}`
+      const response = await fetch(fullUrl)
+
+      if (!response.ok) {
+        throw new Error('Failed to download image')
+      }
+
+      // Get the blob
+      const blob = await response.blob()
+
+      // Create a download link
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+
+      // Generate filename from title or use default
+      const filename = contentTitle
+        ? `${contentTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.png`
+        : `generated_image_${Date.now()}.png`
+
+      link.download = filename
+      document.body.appendChild(link)
+      link.click()
+
+      // Cleanup
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(url)
+
+      toast.dismiss()
+      toast.success('Image downloaded successfully!')
+    } catch (error) {
+      toast.dismiss()
+      toast.error('Failed to download image')
+      console.error('Download error:', error)
+    }
+  }
+
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Header */}
@@ -532,6 +574,16 @@ export default function ContentPage() {
                   <Copy size={14} />
                   <span>Copy</span>
                 </button>
+
+                {content.image_url && (
+                  <button
+                    onClick={() => handleDownloadImage(content.image_url, content.title)}
+                    className="flex items-center space-x-1.5 px-3 py-2 text-xs sm:text-sm font-medium bg-blue-100 text-blue-700 hover:bg-blue-200 rounded-lg transition-colors"
+                  >
+                    <Download size={14} />
+                    <span>Download Image</span>
+                  </button>
+                )}
 
                 {content.status === 'draft' && (
                   <>
