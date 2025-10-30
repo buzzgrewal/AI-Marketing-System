@@ -569,7 +569,7 @@ export default function ContentPage() {
                       `${content.title || ''}\n\n${content.caption || content.body || ''}\n\n${content.hashtags || ''}`
                     )
                   }
-                  className="flex items-center space-x-1.5 px-3 py-2 text-xs sm:text-sm font-medium bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                  className="flex items-center space-x-1.5 px-3 py-2 text-xs sm:text-sm font-medium bg-black text-white hover:bg-gray-800 rounded-lg transition-colors"
                 >
                   <Copy size={14} />
                   <span>Copy</span>
