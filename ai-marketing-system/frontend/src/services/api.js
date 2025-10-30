@@ -166,4 +166,27 @@ export const webhooksAPI = {
   getProviders: () => api.get('/api/webhooks/providers'),
 }
 
+// Facebook Lead Ads API
+export const facebookLeadsAPI = {
+  verify: () => api.get('/api/facebook-leads/verify'),
+  getPages: () => api.get('/api/facebook-leads/pages'),
+  getForms: (pageId) => api.get(`/api/facebook-leads/pages/${pageId}/forms`),
+  getFormDetails: (formId) => api.get(`/api/facebook-leads/forms/${formId}`),
+  syncForm: (formId) => api.post(`/api/facebook-leads/forms/${formId}/sync`),
+  previewLeads: (formId) => api.get(`/api/facebook-leads/forms/${formId}/preview`),
+}
+
+// Lead Forms (Website Form Builder) API
+export const leadFormsAPI = {
+  getAll: (params) => api.get('/api/forms/', { params }),
+  getById: (id) => api.get(`/api/forms/${id}`),
+  getBySlug: (slug) => api.get(`/api/forms/slug/${slug}`),
+  create: (data) => api.post('/api/forms/', data),
+  update: (id, data) => api.put(`/api/forms/${id}`, data),
+  delete: (id) => api.delete(`/api/forms/${id}`),
+  duplicate: (id) => api.post(`/api/forms/${id}/duplicate`),
+  getStats: (id) => api.get(`/api/forms/${id}/stats`),
+  submitForm: (slug, data) => api.post(`/api/forms/submit/${slug}`, data),
+}
+
 export default api

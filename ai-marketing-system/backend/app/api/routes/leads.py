@@ -50,6 +50,7 @@ async def get_leads(
     status: Optional[str] = None,
     sport_type: Optional[str] = None,
     email_consent: Optional[bool] = None,
+    source: Optional[str] = None,
     search: Optional[str] = None,
     db: Session = Depends(get_db)
 ):
@@ -66,6 +67,9 @@ async def get_leads(
 
     if email_consent is not None:
         query = query.filter(Lead.email_consent == email_consent)
+
+    if source:
+        query = query.filter(Lead.source == source)
 
     if search:
         query = query.filter(
@@ -247,10 +251,62 @@ async def get_leads_stats(
     new_leads = db.query(Lead).filter(Lead.status == "new").count()
     customers = db.query(Lead).filter(Lead.status == "customer").count()
 
+    # Get breakdown by source
+    from sqlalchemy import func
+    source_breakdown = db.query(
+        Lead.source,
+        func.count(Lead.id).label('count')
+    ).group_by(Lead.source).all()
+
+    by_source = {source: count for source, count in source_breakdown}
+
     return {
         "total_leads": total_leads,
         "opted_in": opted_in,
         "new_leads": new_leads,
         "customers": customers,
-        "opt_in_rate": (opted_in / total_leads * 100) if total_leads > 0 else 0
+        "opt_in_rate": (opted_in / total_leads * 100) if total_leads > 0 else 0,
+        "by_source": by_source
+    }
+
+
+@router.get("/stats/by-source")
+async def get_leads_stats_by_source(
+    db: Session = Depends(get_db)
+):
+    """Get detailed lead statistics broken down by source"""
+
+    from sqlalchemy import func
+    from app.models.lead import LeadSource
+
+    # Get all sources
+    source_stats = []
+
+    for source in LeadSource:
+        source_leads = db.query(Lead).filter(Lead.source == source.value)
+
+        total = source_leads.count()
+        if total == 0:
+            continue  # Skip sources with no leads
+
+        opted_in = source_leads.filter(Lead.email_consent == True).count()
+        new = source_leads.filter(Lead.status == "new").count()
+        customers = source_leads.filter(Lead.status == "customer").count()
+
+        source_stats.append({
+            "source": source.value,
+            "total_leads": total,
+            "opted_in": opted_in,
+            "new_leads": new,
+            "customers": customers,
+            "opt_in_rate": round((opted_in / total * 100), 2) if total > 0 else 0,
+            "customer_conversion_rate": round((customers / total * 100), 2) if total > 0 else 0
+        })
+
+    # Sort by total leads descending
+    source_stats.sort(key=lambda x: x["total_leads"], reverse=True)
+
+    return {
+        "sources": source_stats,
+        "total_sources": len(source_stats)
     }

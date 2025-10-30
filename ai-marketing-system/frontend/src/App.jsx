@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast'
 // Pages
 import DashboardPage from './pages/DashboardPage'
 import LeadsPage from './pages/LeadsPage'
+import LeadSourcingPage from './pages/LeadSourcingPage'
 import CampaignsPage from './pages/CampaignsPage'
 import ContentPage from './pages/ContentPage'
 import AnalyticsPage from './pages/AnalyticsPage'
@@ -26,6 +27,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<DashboardPage />} />
           <Route path="leads" element={<LeadsPage />} />
+          <Route path="lead-sourcing" element={<LeadSourcingPage />} />
           <Route path="segments" element={<SegmentsPage />} />
           <Route path="campaigns" element={<CampaignsPage />} />
           <Route path="ab-tests" element={<ABTestPage />} />

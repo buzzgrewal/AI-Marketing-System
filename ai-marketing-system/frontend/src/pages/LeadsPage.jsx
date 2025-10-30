@@ -9,6 +9,7 @@ export default function LeadsPage() {
   const [showForm, setShowForm] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [filterConsent, setFilterConsent] = useState('all')
+  const [filterSource, setFilterSource] = useState('all')
 
   const [formData, setFormData] = useState({
     email: '',
@@ -18,6 +19,7 @@ export default function LeadsPage() {
     location: '',
     sport_type: 'cycling',
     customer_type: 'athlete',
+    source: 'manual',
     email_consent: false,
     sms_consent: false,
     consent_source: 'manual',
@@ -26,7 +28,7 @@ export default function LeadsPage() {
 
   useEffect(() => {
     fetchLeads()
-  }, [searchTerm, filterConsent])
+  }, [searchTerm, filterConsent, filterSource])
 
   const fetchLeads = async () => {
     setLoading(true)
@@ -35,6 +37,9 @@ export default function LeadsPage() {
       if (searchTerm) params.search = searchTerm
       if (filterConsent !== 'all') {
         params.email_consent = filterConsent === 'opted_in'
+      }
+      if (filterSource !== 'all') {
+        params.source = filterSource
       }
 
       const response = await leadsAPI.getAll(params)
@@ -60,6 +65,7 @@ export default function LeadsPage() {
         location: '',
         sport_type: 'cycling',
         customer_type: 'athlete',
+        source: 'manual',
         email_consent: false,
         sms_consent: false,
         consent_source: 'manual',
@@ -146,6 +152,20 @@ export default function LeadsPage() {
             className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm sm:text-base"
           />
         </div>
+        <select
+          value={filterSource}
+          onChange={(e) => setFilterSource(e.target.value)}
+          className="px-3 sm:px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm sm:text-base"
+        >
+          <option value="all">All Sources</option>
+          <option value="manual">Manual</option>
+          <option value="shopify">Shopify</option>
+          <option value="facebook">Facebook</option>
+          <option value="website">Website</option>
+          <option value="import">Import</option>
+          <option value="event">Event</option>
+          <option value="other">Other</option>
+        </select>
         <select
           value={filterConsent}
           onChange={(e) => setFilterConsent(e.target.value)}
@@ -255,6 +275,26 @@ export default function LeadsPage() {
                   <option value="bike_fitter">Bike Fitter</option>
                 </select>
               </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Lead Source
+                </label>
+                <select
+                  value={formData.source}
+                  onChange={(e) =>
+                    setFormData({ ...formData, source: e.target.value })
+                  }
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                >
+                  <option value="manual">Manual Entry</option>
+                  <option value="website">Website Form</option>
+                  <option value="facebook">Facebook</option>
+                  <option value="event">Event Registration</option>
+                  <option value="import">Import/CSV</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
             </div>
 
             <div className="space-y-2">
@@ -331,6 +371,9 @@ export default function LeadsPage() {
                       Type
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Source
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Consent
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -357,6 +400,18 @@ export default function LeadsPage() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className="text-sm text-gray-900">
                           {lead.customer_type || '-'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`px-2 py-1 text-xs font-medium rounded capitalize ${
+                          lead.source === 'shopify' ? 'bg-purple-100 text-purple-700' :
+                          lead.source === 'facebook' ? 'bg-blue-100 text-blue-700' :
+                          lead.source === 'website' ? 'bg-green-100 text-green-700' :
+                          lead.source === 'import' ? 'bg-orange-100 text-orange-700' :
+                          lead.source === 'event' ? 'bg-pink-100 text-pink-700' :
+                          'bg-gray-100 text-gray-700'
+                        }`}>
+                          {lead.source || 'manual'}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -435,6 +490,19 @@ export default function LeadsPage() {
                     <span className="text-gray-500">Type:</span>{' '}
                     <span className="font-medium text-gray-900">
                       {lead.customer_type || '-'}
+                    </span>
+                  </div>
+                  <div className="col-span-2">
+                    <span className="text-gray-500">Source:</span>{' '}
+                    <span className={`px-2 py-0.5 text-xs font-medium rounded capitalize ${
+                      lead.source === 'shopify' ? 'bg-purple-100 text-purple-700' :
+                      lead.source === 'facebook' ? 'bg-blue-100 text-blue-700' :
+                      lead.source === 'website' ? 'bg-green-100 text-green-700' :
+                      lead.source === 'import' ? 'bg-orange-100 text-orange-700' :
+                      lead.source === 'event' ? 'bg-pink-100 text-pink-700' :
+                      'bg-gray-100 text-gray-700'
+                    }`}>
+                      {lead.source || 'manual'}
                     </span>
                   </div>
                 </div>

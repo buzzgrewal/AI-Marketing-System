@@ -12,11 +12,13 @@ import {
   Webhook,
   Store,
   X,
+  Download,
 } from 'lucide-react'
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
   { name: 'Leads', href: '/leads', icon: Users },
+  { name: 'Lead Sourcing', href: '/lead-sourcing', icon: Download },
   { name: 'Segments', href: '/segments', icon: Filter },
   { name: 'Campaigns', href: '/campaigns', icon: Mail },
   { name: 'A/B Testing', href: '/ab-tests', icon: FlaskConical },
