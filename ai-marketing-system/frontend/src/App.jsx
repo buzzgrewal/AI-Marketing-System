@@ -14,6 +14,7 @@ import SegmentsPage from './pages/SegmentsPage'
 import ABTestPage from './pages/ABTestPage'
 import WebhooksPage from './pages/WebhooksPage'
 import ShopifyPage from './pages/ShopifyPage'
+import OutreachPage from './pages/OutreachPage'
 
 // Layout
 import Layout from './components/common/Layout'
@@ -30,6 +31,7 @@ function App() {
           <Route path="lead-sourcing" element={<LeadSourcingPage />} />
           <Route path="segments" element={<SegmentsPage />} />
           <Route path="campaigns" element={<CampaignsPage />} />
+          <Route path="outreach" element={<OutreachPage />} />
           <Route path="ab-tests" element={<ABTestPage />} />
           <Route path="content" element={<ContentPage />} />
           <Route path="templates" element={<TemplatesPage />} />

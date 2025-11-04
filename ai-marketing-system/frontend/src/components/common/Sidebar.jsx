@@ -13,6 +13,7 @@ import {
   Store,
   X,
   Download,
+  Send,
 } from 'lucide-react'
 
 const navigation = [
@@ -21,6 +22,7 @@ const navigation = [
   { name: 'Lead Sourcing', href: '/lead-sourcing', icon: Download },
   { name: 'Segments', href: '/segments', icon: Filter },
   { name: 'Campaigns', href: '/campaigns', icon: Mail },
+  { name: 'Outreach', href: '/outreach', icon: Send },
   { name: 'A/B Testing', href: '/ab-tests', icon: FlaskConical },
   { name: 'Content Generator', href: '/content', icon: Sparkles },
   { name: 'Email Templates', href: '/templates', icon: FileText },

@@ -8,5 +8,14 @@ from app.models.scheduled_post import ScheduledPost
 from app.models.segment import Segment
 from app.models.ab_test import ABTest, ABTestVariant
 from app.models.webhook import Webhook, WebhookEvent
+from app.models.outreach import OutreachMessage, OutreachSequence, OutreachEnrollment
+from app.models.retargeting import (
+    RetargetingAudience, RetargetingEvent, RetargetingCampaign, RetargetingPerformance
+)
 
-__all__ = ["User", "Lead", "Campaign", "EmailLog", "GeneratedContent", "EmailTemplate", "ScheduledPost", "Segment", "ABTest", "ABTestVariant", "Webhook", "WebhookEvent"]
+__all__ = [
+    "User", "Lead", "Campaign", "EmailLog", "GeneratedContent", "EmailTemplate",
+    "ScheduledPost", "Segment", "ABTest", "ABTestVariant", "Webhook", "WebhookEvent",
+    "OutreachMessage", "OutreachSequence", "OutreachEnrollment",
+    "RetargetingAudience", "RetargetingEvent", "RetargetingCampaign", "RetargetingPerformance"
+]

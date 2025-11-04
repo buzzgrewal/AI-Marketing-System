@@ -189,4 +189,39 @@ export const leadFormsAPI = {
   submitForm: (slug, data) => api.post(`/api/forms/submit/${slug}`, data),
 }
 
+// Outreach API
+export const outreachAPI = {
+  // Messages
+  getAllMessages: (params) => api.get('/api/outreach/messages', { params }),
+  getMessage: (id) => api.get(`/api/outreach/messages/${id}`),
+  createMessage: (data) => api.post('/api/outreach/messages', data),
+  sendMessage: (id) => api.post(`/api/outreach/messages/${id}/send`),
+
+  // Sequences
+  getAllSequences: (params) => api.get('/api/outreach/sequences', { params }),
+  getSequence: (id) => api.get(`/api/outreach/sequences/${id}`),
+  createSequence: (data) => api.post('/api/outreach/sequences', data),
+  updateSequence: (id, data) => api.put(`/api/outreach/sequences/${id}`, data),
+  deleteSequence: (id) => api.delete(`/api/outreach/sequences/${id}`),
+
+  // Enrollments
+  enrollLeads: (sequenceId, leadIds) => api.post(`/api/outreach/sequences/${sequenceId}/enroll`, {
+    sequence_id: sequenceId,
+    lead_ids: leadIds
+  }),
+  getEnrollments: (sequenceId, params) => api.get(`/api/outreach/sequences/${sequenceId}/enrollments`, { params }),
+  stopEnrollment: (sequenceId, leadId, reason) => api.post(`/api/outreach/sequences/${sequenceId}/enrollments/${leadId}/stop`, null, {
+    params: { reason }
+  }),
+
+  // Analytics
+  getSequenceAnalytics: (sequenceId) => api.get(`/api/outreach/sequences/${sequenceId}/analytics`),
+
+  // AI Generation
+  generateMessage: (data) => api.post('/api/outreach/generate-message', data),
+
+  // Background processing
+  processSequences: () => api.post('/api/outreach/process-sequences'),
+}
+
 export default api

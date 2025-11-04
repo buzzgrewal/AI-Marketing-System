@@ -6,7 +6,7 @@ import os
 from app.core.config import settings
 from app.db.base import Base
 from app.db.session import engine
-from app.api.routes import auth, leads, campaigns, content, email_templates, social_scheduling, segments, ab_tests, webhooks, shopify, facebook_leads, lead_forms
+from app.api.routes import auth, leads, campaigns, content, email_templates, social_scheduling, segments, ab_tests, webhooks, shopify, facebook_leads, lead_forms, outreach
 
 # Import models to ensure tables are created
 from app.models import lead_form  # noqa: F401
@@ -47,6 +47,7 @@ app.include_router(webhooks.router, prefix="/api/webhooks", tags=["Webhooks"])
 app.include_router(shopify.router, prefix="/api/shopify", tags=["Shopify Integration"])
 app.include_router(facebook_leads.router, prefix="/api/facebook-leads", tags=["Facebook Lead Ads"])
 app.include_router(lead_forms.router, prefix="/api/forms", tags=["Lead Forms"])
+app.include_router(outreach.router, prefix="/api/outreach", tags=["Outreach Generation"])
 
 
 @app.get("/")
