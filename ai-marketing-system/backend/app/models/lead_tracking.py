@@ -135,7 +135,7 @@ class EngagementHistory(Base):
     # Engagement data
     title = Column(String)
     description = Column(Text)
-    metadata = Column(JSON)  # Additional context
+    event_metadata = Column(JSON)  # Additional context
 
     # Value tracking
     engagement_value = Column(Integer, default=0)  # Relative value (0-100)

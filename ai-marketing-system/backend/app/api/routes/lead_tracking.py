@@ -272,7 +272,7 @@ async def track_engagement(
     source_name: Optional[str] = None,
     title: Optional[str] = None,
     description: Optional[str] = None,
-    metadata: Optional[dict] = None,
+    event_metadata: Optional[dict] = None,
     engagement_value: int = 0,
     revenue_attributed: float = 0.0,
     ip_address: Optional[str] = None,
@@ -300,7 +300,7 @@ async def track_engagement(
             source_name=source_name,
             title=title,
             description=description,
-            metadata=metadata,
+            event_metadata=event_metadata,
             engagement_value=engagement_value,
             revenue_attributed=revenue_attributed,
             ip_address=ip_address,
@@ -428,12 +428,17 @@ async def get_engagement_stats(
 
 # ============= Attribution Tracking =============
 
+from pydantic import BaseModel
+
+class AttributionRequest(BaseModel):
+    conversion_type: str
+    conversion_value: float
+    attribution_model: str = "linear"
+
 @router.post("/attribution/{lead_id}/calculate")
 async def calculate_attribution(
     lead_id: int,
-    conversion_type: str,
-    conversion_value: float,
-    attribution_model: str = "linear",
+    request: AttributionRequest,
     db: Session = Depends(get_db)
 ):
     """Calculate multi-touch attribution for a conversion"""
@@ -448,9 +453,9 @@ async def calculate_attribution(
     try:
         attribution = lead_tracking_service.calculate_attribution(
             lead_id=lead_id,
-            conversion_type=conversion_type,
-            conversion_value=conversion_value,
-            attribution_model=attribution_model,
+            conversion_type=request.conversion_type,
+            conversion_value=request.conversion_value,
+            attribution_model=request.attribution_model,
             db=db
         )
 
