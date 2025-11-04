@@ -16,6 +16,7 @@ import WebhooksPage from './pages/WebhooksPage'
 import ShopifyPage from './pages/ShopifyPage'
 import OutreachPage from './pages/OutreachPage'
 import RetargetingPage from './pages/RetargetingPage'
+import FormBuilderPage from './pages/FormBuilderPage'
 
 // Layout
 import Layout from './components/common/Layout'
@@ -30,6 +31,7 @@ function App() {
           <Route index element={<DashboardPage />} />
           <Route path="leads" element={<LeadsPage />} />
           <Route path="lead-sourcing" element={<LeadSourcingPage />} />
+          <Route path="form-builder" element={<FormBuilderPage />} />
           <Route path="segments" element={<SegmentsPage />} />
           <Route path="campaigns" element={<CampaignsPage />} />
           <Route path="outreach" element={<OutreachPage />} />

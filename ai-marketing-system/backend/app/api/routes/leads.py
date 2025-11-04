@@ -310,3 +310,195 @@ async def get_leads_stats_by_source(
         "sources": source_stats,
         "total_sources": len(source_stats)
     }
+
+
+# ============= Lead Enrichment & Deduplication =============
+
+@router.get("/{lead_id}/duplicates")
+async def find_lead_duplicates(
+    lead_id: int,
+    db: Session = Depends(get_db)
+):
+    """Find duplicate leads for a specific lead"""
+    from app.services.lead_enrichment_service import lead_enrichment_service
+
+    lead = db.query(Lead).filter(Lead.id == lead_id).first()
+    if not lead:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Lead not found"
+        )
+
+    duplicates = lead_enrichment_service.find_duplicates(db, lead_id=lead_id)
+
+    return {
+        "lead_id": lead_id,
+        "duplicates_found": len(duplicates),
+        "duplicates": [
+            {
+                "id": dup.id,
+                "email": dup.email,
+                "first_name": dup.first_name,
+                "last_name": dup.last_name,
+                "phone": dup.phone,
+                "created_at": dup.created_at.isoformat() if dup.created_at else None
+            }
+            for dup in duplicates
+        ]
+    }
+
+
+@router.post("/{lead_id}/merge")
+async def merge_leads(
+    lead_id: int,
+    duplicate_ids: List[int],
+    db: Session = Depends(get_db)
+):
+    """Merge duplicate leads into this lead"""
+    from app.services.lead_enrichment_service import lead_enrichment_service
+
+    try:
+        merged_lead = lead_enrichment_service.merge_leads(lead_id, duplicate_ids, db)
+
+        return {
+            "message": "Leads merged successfully",
+            "primary_lead_id": merged_lead.id,
+            "merged_count": len(duplicate_ids)
+        }
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to merge leads: {str(e)}"
+        )
+
+
+@router.post("/deduplicate")
+async def auto_deduplicate(
+    dry_run: bool = True,
+    db: Session = Depends(get_db)
+):
+    """Automatically find and merge duplicate leads"""
+    from app.services.lead_enrichment_service import lead_enrichment_service
+
+    try:
+        results = lead_enrichment_service.auto_deduplicate(db, dry_run=dry_run)
+
+        return {
+            "message": "Deduplication complete" if not dry_run else "Deduplication analysis complete (dry run)",
+            "dry_run": dry_run,
+            **results
+        }
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to deduplicate: {str(e)}"
+        )
+
+
+@router.post("/{lead_id}/enrich", response_model=LeadResponse)
+async def enrich_lead(
+    lead_id: int,
+    db: Session = Depends(get_db)
+):
+    """Enrich a lead with derived data"""
+    from app.services.lead_enrichment_service import lead_enrichment_service
+
+    lead = db.query(Lead).filter(Lead.id == lead_id).first()
+    if not lead:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Lead not found"
+        )
+
+    try:
+        enriched_lead = lead_enrichment_service.enrich_lead(lead, db)
+        return enriched_lead
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to enrich lead: {str(e)}"
+        )
+
+
+@router.post("/bulk-enrich")
+async def bulk_enrich_leads(
+    lead_ids: Optional[List[int]] = None,
+    db: Session = Depends(get_db)
+):
+    """Enrich multiple leads at once"""
+    from app.services.lead_enrichment_service import lead_enrichment_service
+
+    try:
+        results = lead_enrichment_service.bulk_enrich(db, lead_ids=lead_ids)
+
+        return {
+            "message": "Bulk enrichment complete",
+            **results
+        }
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to bulk enrich: {str(e)}"
+        )
+
+
+@router.get("/{lead_id}/quality")
+async def get_lead_quality_score(
+    lead_id: int,
+    db: Session = Depends(get_db)
+):
+    """Get comprehensive quality score for a lead"""
+    from app.services.lead_enrichment_service import lead_enrichment_service
+
+    lead = db.query(Lead).filter(Lead.id == lead_id).first()
+    if not lead:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Lead not found"
+        )
+
+    try:
+        quality_data = lead_enrichment_service.calculate_lead_quality(lead, db)
+
+        return {
+            "lead_id": lead_id,
+            "email": lead.email,
+            "name": f"{lead.first_name or ''} {lead.last_name or ''}".strip(),
+            **quality_data
+        }
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to calculate quality score: {str(e)}"
+        )
+
+
+@router.post("/{lead_id}/clean", response_model=LeadResponse)
+async def clean_lead_data(
+    lead_id: int,
+    db: Session = Depends(get_db)
+):
+    """Clean and standardize lead data"""
+    from app.services.lead_enrichment_service import lead_enrichment_service
+
+    lead = db.query(Lead).filter(Lead.id == lead_id).first()
+    if not lead:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Lead not found"
+        )
+
+    try:
+        cleaned_lead = lead_enrichment_service.clean_lead_data(lead, db)
+        return cleaned_lead
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to clean lead data: {str(e)}"
+        )

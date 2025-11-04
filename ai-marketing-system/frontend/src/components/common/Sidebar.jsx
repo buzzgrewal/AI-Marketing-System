@@ -15,12 +15,14 @@ import {
   Download,
   Send,
   Target,
+  Layout,
 } from 'lucide-react'
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
   { name: 'Leads', href: '/leads', icon: Users },
   { name: 'Lead Sourcing', href: '/lead-sourcing', icon: Download },
+  { name: 'Form Builder', href: '/form-builder', icon: Layout },
   { name: 'Segments', href: '/segments', icon: Filter },
   { name: 'Campaigns', href: '/campaigns', icon: Mail },
   { name: 'Outreach', href: '/outreach', icon: Send },
