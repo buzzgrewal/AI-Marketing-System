@@ -17,6 +17,7 @@ import ShopifyPage from './pages/ShopifyPage'
 import OutreachPage from './pages/OutreachPage'
 import RetargetingPage from './pages/RetargetingPage'
 import FormBuilderPage from './pages/FormBuilderPage'
+import LeadAnalyticsPage from './pages/LeadAnalyticsPage'
 
 // Layout
 import Layout from './components/common/Layout'
@@ -43,6 +44,7 @@ function App() {
           <Route path="webhooks" element={<WebhooksPage />} />
           <Route path="shopify" element={<ShopifyPage />} />
           <Route path="analytics" element={<AnalyticsPage />} />
+          <Route path="lead-analytics" element={<LeadAnalyticsPage />} />
         </Route>
 
         {/* Catch all */}

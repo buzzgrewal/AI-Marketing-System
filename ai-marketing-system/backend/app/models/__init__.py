@@ -12,10 +12,16 @@ from app.models.outreach import OutreachMessage, OutreachSequence, OutreachEnrol
 from app.models.retargeting import (
     RetargetingAudience, RetargetingEvent, RetargetingCampaign, RetargetingPerformance
 )
+from app.models.lead_tracking import (
+    LeadLifecycle, LeadScore, EngagementHistory,
+    LeadAttribution, LeadJourney, LeadActivitySummary
+)
 
 __all__ = [
     "User", "Lead", "Campaign", "EmailLog", "GeneratedContent", "EmailTemplate",
     "ScheduledPost", "Segment", "ABTest", "ABTestVariant", "Webhook", "WebhookEvent",
     "OutreachMessage", "OutreachSequence", "OutreachEnrollment",
-    "RetargetingAudience", "RetargetingEvent", "RetargetingCampaign", "RetargetingPerformance"
+    "RetargetingAudience", "RetargetingEvent", "RetargetingCampaign", "RetargetingPerformance",
+    "LeadLifecycle", "LeadScore", "EngagementHistory",
+    "LeadAttribution", "LeadJourney", "LeadActivitySummary"
 ]

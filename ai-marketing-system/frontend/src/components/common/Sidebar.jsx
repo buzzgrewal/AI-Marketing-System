@@ -16,6 +16,7 @@ import {
   Send,
   Target,
   Layout,
+  TrendingUp,
 } from 'lucide-react'
 
 const navigation = [
@@ -34,6 +35,7 @@ const navigation = [
   { name: 'Webhooks', href: '/webhooks', icon: Webhook },
   { name: 'Shopify', href: '/shopify', icon: Store },
   { name: 'Analytics', href: '/analytics', icon: BarChart3 },
+  { name: 'Lead Analytics', href: '/lead-analytics', icon: TrendingUp },
 ]
 
 export default function Sidebar({ isOpen, onClose }) {

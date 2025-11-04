@@ -6,7 +6,7 @@ import os
 from app.core.config import settings
 from app.db.base import Base
 from app.db.session import engine
-from app.api.routes import auth, leads, campaigns, content, email_templates, social_scheduling, segments, ab_tests, webhooks, shopify, facebook_leads, lead_forms, outreach, retargeting
+from app.api.routes import auth, leads, campaigns, content, email_templates, social_scheduling, segments, ab_tests, webhooks, shopify, facebook_leads, lead_forms, outreach, retargeting, lead_tracking
 
 # Import models to ensure tables are created
 from app.models import lead_form  # noqa: F401
@@ -49,6 +49,7 @@ app.include_router(facebook_leads.router, prefix="/api/facebook-leads", tags=["F
 app.include_router(lead_forms.router, prefix="/api/forms", tags=["Lead Forms"])
 app.include_router(outreach.router, prefix="/api/outreach", tags=["Outreach Generation"])
 app.include_router(retargeting.router, prefix="/api/retargeting", tags=["Ad Retargeting"])
+app.include_router(lead_tracking.router, prefix="/api/lead-tracking", tags=["Lead Tracking & Analytics"])
 
 
 @app.get("/")

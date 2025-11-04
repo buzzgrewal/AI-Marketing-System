@@ -251,4 +251,36 @@ export const retargetingAPI = {
   getCampaignAnalytics: (id) => api.get(`/api/retargeting/campaigns/${id}/analytics`),
 }
 
+// Lead Tracking & Analytics API
+export const leadTrackingAPI = {
+  // Lifecycle Management
+  transitionStage: (leadId, data) => api.post(`/api/lead-tracking/lifecycle/${leadId}/transition`, null, { params: data }),
+  getLifecycleHistory: (leadId) => api.get(`/api/lead-tracking/lifecycle/${leadId}/history`),
+  getCurrentStage: (leadId) => api.get(`/api/lead-tracking/lifecycle/${leadId}/current`),
+
+  // Lead Scoring
+  calculateScore: (leadId) => api.post(`/api/lead-tracking/scoring/${leadId}/calculate`),
+  getScore: (leadId) => api.get(`/api/lead-tracking/scoring/${leadId}`),
+  bulkCalculateScores: (leadIds) => api.post('/api/lead-tracking/scoring/bulk-calculate', { lead_ids: leadIds }),
+
+  // Engagement Tracking
+  trackEngagement: (leadId, data) => api.post(`/api/lead-tracking/engagement/${leadId}`, data),
+  getEngagementHistory: (leadId, params) => api.get(`/api/lead-tracking/engagement/${leadId}/history`, { params }),
+  getEngagementStats: (params) => api.get('/api/lead-tracking/engagement/stats/summary', { params }),
+
+  // Attribution
+  calculateAttribution: (leadId, data) => api.post(`/api/lead-tracking/attribution/${leadId}/calculate`, data),
+  getAttributionHistory: (leadId) => api.get(`/api/lead-tracking/attribution/${leadId}`),
+  getAttributionSummary: (params) => api.get('/api/lead-tracking/attribution/stats/summary', { params }),
+
+  // Journey Tracking
+  getJourney: (leadId) => api.get(`/api/lead-tracking/journey/${leadId}`),
+  getJourneyStats: () => api.get('/api/lead-tracking/journey/stats/overview'),
+
+  // Analytics & Reports
+  getFunnel: (params) => api.get('/api/lead-tracking/analytics/funnel', { params }),
+  getCohortAnalysis: (params) => api.get('/api/lead-tracking/analytics/cohort', { params }),
+  getQualityDistribution: () => api.get('/api/lead-tracking/analytics/lead-quality'),
+}
+
 export default api
