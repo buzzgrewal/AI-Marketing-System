@@ -224,4 +224,31 @@ export const outreachAPI = {
   processSequences: () => api.post('/api/outreach/process-sequences'),
 }
 
+// Retargeting API
+export const retargetingAPI = {
+  // Audiences
+  getAllAudiences: (params) => api.get('/api/retargeting/audiences', { params }),
+  getAudience: (id) => api.get(`/api/retargeting/audiences/${id}`),
+  createAudience: (data) => api.post('/api/retargeting/audiences', data),
+  updateAudience: (id, data) => api.put(`/api/retargeting/audiences/${id}`, data),
+  deleteAudience: (id) => api.delete(`/api/retargeting/audiences/${id}`),
+  syncAudience: (id) => api.post(`/api/retargeting/audiences/${id}/sync`),
+  getAudienceAnalytics: (id) => api.get(`/api/retargeting/audiences/${id}/analytics`),
+
+  // Events
+  trackEvent: (data) => api.post('/api/retargeting/events', data),
+  getAllEvents: (params) => api.get('/api/retargeting/events', { params }),
+  getEventStats: (days) => api.get('/api/retargeting/events/stats', { params: { days } }),
+
+  // Campaigns
+  getAllCampaigns: (params) => api.get('/api/retargeting/campaigns', { params }),
+  getCampaign: (id) => api.get(`/api/retargeting/campaigns/${id}`),
+  createCampaign: (data) => api.post('/api/retargeting/campaigns', data),
+  updateCampaign: (id, data) => api.put(`/api/retargeting/campaigns/${id}`, data),
+  deleteCampaign: (id) => api.delete(`/api/retargeting/campaigns/${id}`),
+  pauseCampaign: (id) => api.post(`/api/retargeting/campaigns/${id}/pause`),
+  activateCampaign: (id) => api.post(`/api/retargeting/campaigns/${id}/activate`),
+  getCampaignAnalytics: (id) => api.get(`/api/retargeting/campaigns/${id}/analytics`),
+}
+
 export default api

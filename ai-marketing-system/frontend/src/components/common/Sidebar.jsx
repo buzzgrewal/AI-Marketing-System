@@ -14,6 +14,7 @@ import {
   X,
   Download,
   Send,
+  Target,
 } from 'lucide-react'
 
 const navigation = [
@@ -23,6 +24,7 @@ const navigation = [
   { name: 'Segments', href: '/segments', icon: Filter },
   { name: 'Campaigns', href: '/campaigns', icon: Mail },
   { name: 'Outreach', href: '/outreach', icon: Send },
+  { name: 'Ad Retargeting', href: '/retargeting', icon: Target },
   { name: 'A/B Testing', href: '/ab-tests', icon: FlaskConical },
   { name: 'Content Generator', href: '/content', icon: Sparkles },
   { name: 'Email Templates', href: '/templates', icon: FileText },
