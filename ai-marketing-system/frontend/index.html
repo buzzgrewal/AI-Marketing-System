@@ -7,7 +7,7 @@
     <title>AI Marketing Automation</title>
 
     <!-- Google Tag Manager -->
-    <script>
+    <script type="module">
       // GTM Container ID - Configure in .env as VITE_GTM_ID
       const gtmId = import.meta.env.VITE_GTM_ID || 'GTM-XXXXXX';
       if (gtmId && gtmId !== 'GTM-XXXXXX') {
@@ -21,7 +21,7 @@
     <!-- End Google Tag Manager -->
 
     <!-- Google Analytics 4 -->
-    <script>
+    <script type="module">
       // GA4 Measurement ID - Configure in .env as VITE_GA_MEASUREMENT_ID
       const gaMeasurementId = import.meta.env.VITE_GA_MEASUREMENT_ID || '';
       if (gaMeasurementId && gaMeasurementId.startsWith('G-')) {
@@ -40,7 +40,7 @@
     <!-- End Google Analytics 4 -->
 
     <!-- Meta Pixel -->
-    <script>
+    <script type="module">
       // Meta Pixel ID - Configure in .env as VITE_META_PIXEL_ID
       const metaPixelId = import.meta.env.VITE_META_PIXEL_ID || '';
       if (metaPixelId) {
@@ -52,8 +52,8 @@
         t.src=v;s=b.getElementsByTagName(e)[0];
         s.parentNode.insertBefore(t,s)}(window, document,'script',
         'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', metaPixelId);
-        fbq('track', 'PageView');
+        window.fbq('init', metaPixelId);
+        window.fbq('track', 'PageView');
       }
     </script>
     <!-- End Meta Pixel -->
