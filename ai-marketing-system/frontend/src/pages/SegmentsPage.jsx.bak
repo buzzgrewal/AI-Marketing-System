@@ -341,14 +341,14 @@ const SegmentsPage = () => {
                 placeholder="Search segments..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
           <select
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value)}
-            className="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option key="all" value="all">All Types</option>
             <option key="dynamic" value="dynamic">Dynamic</option>
@@ -472,7 +472,7 @@ const SegmentsPage = () => {
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required
                   />
                 </div>
@@ -484,7 +484,7 @@ const SegmentsPage = () => {
                   <textarea
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     rows="3"
                   />
                 </div>
@@ -496,7 +496,7 @@ const SegmentsPage = () => {
                   <select
                     value={formData.segment_type}
                     onChange={(e) => setFormData({ ...formData, segment_type: e.target.value })}
-                    className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option key="dynamic" value="dynamic">Dynamic (Auto-updates)</option>
                     <option key="static" value="static">Static (Fixed)</option>
@@ -521,7 +521,7 @@ const SegmentsPage = () => {
                           addTag();
                         }
                       }}
-                      className="flex-1 px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder="Add a tag..."
                     />
                     <button
@@ -561,7 +561,7 @@ const SegmentsPage = () => {
                       ...formData,
                       criteria: { ...formData.criteria, logic: e.target.value }
                     })}
-                    className="px-3 py-1 bg-white border border-gray-300 rounded text-sm"
+                    className="px-3 py-1 border border-gray-300 rounded text-sm"
                   >
                     <option key="AND" value="AND">Match ALL conditions (AND)</option>
                     <option key="OR" value="OR">Match ANY condition (OR)</option>
@@ -584,7 +584,7 @@ const SegmentsPage = () => {
                         <select
                           value={fieldValue}
                           onChange={(e) => updateCondition(index, 'field', e.target.value)}
-                          className="px-3 py-2 bg-white border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+                          className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                         >
                           {availableFields.map((field) => (
                             <option key={field.name} value={field.name}>
@@ -596,7 +596,7 @@ const SegmentsPage = () => {
                         <select
                           value={operatorValue}
                           onChange={(e) => updateCondition(index, 'operator', e.target.value)}
-                          className="px-3 py-2 bg-white border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+                          className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                         >
                           {operators.map((op) => (
                             <option key={op} value={op}>
@@ -609,7 +609,7 @@ const SegmentsPage = () => {
                           type="text"
                           value={condition.value}
                           onChange={(e) => updateCondition(index, 'value', e.target.value)}
-                          className="px-3 py-2 bg-white border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+                          className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                           placeholder="Value"
                         />
                       </div>

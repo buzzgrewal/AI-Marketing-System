@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { leadsAPI } from '../services/api'
 import toast from 'react-hot-toast'
 import { UserPlus, Upload, Search, Filter } from 'lucide-react'
-import Checkbox from '../components/Checkbox'
 
 export default function LeadsPage() {
   const [leads, setLeads] = useState([])
@@ -300,12 +299,14 @@ export default function LeadsPage() {
 
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
-                <Checkbox
+                <input
+                  type="checkbox"
                   id="email_consent"
                   checked={formData.email_consent}
                   onChange={(e) =>
                     setFormData({ ...formData, email_consent: e.target.checked })
                   }
+                  className="w-4 h-4 text-primary-600"
                 />
                 <label htmlFor="email_consent" className="text-sm text-gray-700">
                   Email consent obtained
@@ -313,12 +314,14 @@ export default function LeadsPage() {
               </div>
 
               <div className="flex items-center space-x-2">
-                <Checkbox
+                <input
+                  type="checkbox"
                   id="sms_consent"
                   checked={formData.sms_consent}
                   onChange={(e) =>
                     setFormData({ ...formData, sms_consent: e.target.checked })
                   }
+                  className="w-4 h-4 text-primary-600"
                 />
                 <label htmlFor="sms_consent" className="text-sm text-gray-700">
                   SMS consent obtained

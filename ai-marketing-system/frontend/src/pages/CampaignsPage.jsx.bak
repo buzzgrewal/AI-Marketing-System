@@ -209,7 +209,7 @@ export default function CampaignsPage() {
                         setFormData({ ...formData, template_id: null })
                       }
                     }}
-                    className="form-checkbox h-4 w-4 text-primary-600 rounded border-gray-300 focus:ring-primary-500"
+                    className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
                   />
                   <span className="text-sm font-medium text-gray-900">
                     Use Email Template
@@ -306,7 +306,7 @@ export default function CampaignsPage() {
                         setFormData({ ...formData, segment_id: null })
                       }
                     }}
-                    className="form-checkbox h-4 w-4 text-primary-600 rounded border-gray-300 focus:ring-primary-500"
+                    className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
                   />
                   <span className="text-sm font-medium text-gray-900">
                     Target Specific Segment

@@ -623,7 +623,7 @@ export default function FormBuilderPage() {
                           type="checkbox"
                           checked={field.required}
                           onChange={(e) => updateField(index, { required: e.target.checked })}
-                          className="w-4 h-4 rounded text-blue-600 bg-white border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 accent-blue-600"
+                          className="rounded text-blue-600"
                         />
                         <span className="text-xs text-gray-600">Required</span>
                       </label>
@@ -695,7 +695,7 @@ export default function FormBuilderPage() {
                       type="checkbox"
                       checked={formConfig.require_consent}
                       onChange={(e) => setFormConfig({ ...formConfig, require_consent: e.target.checked })}
-                      className="w-4 h-4 rounded text-blue-600 bg-white border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 accent-blue-600"
+                      className="rounded text-blue-600"
                     />
                     <span className="text-sm text-gray-700">Require Consent</span>
                   </label>
@@ -705,7 +705,7 @@ export default function FormBuilderPage() {
                       type="checkbox"
                       checked={formConfig.is_active}
                       onChange={(e) => setFormConfig({ ...formConfig, is_active: e.target.checked })}
-                      className="w-4 h-4 rounded text-blue-600 bg-white border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 accent-blue-600"
+                      className="rounded text-blue-600"
                     />
                     <span className="text-sm text-gray-700">Active</span>
                   </label>
@@ -796,7 +796,7 @@ export default function FormBuilderPage() {
                       ))}
                     </select>
                   ) : field.type === 'checkbox' ? (
-                    <input type="checkbox" className="w-4 h-4 rounded text-blue-600 bg-white border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 accent-blue-600" />
+                    <input type="checkbox" className="rounded text-blue-600" />
                   ) : (
                     <input
                       type={field.type}
@@ -809,7 +809,7 @@ export default function FormBuilderPage() {
 
               {formConfig.require_consent && (
                 <div className="flex items-start gap-2">
-                  <input type="checkbox" className="mt-1 w-4 h-4 rounded text-blue-600 bg-white border-gray-300 focus:ring-blue-500" />
+                  <input type="checkbox" className="mt-1 rounded text-blue-600" />
                   <span className="text-sm">{formConfig.consent_text}</span>
                 </div>
               )}

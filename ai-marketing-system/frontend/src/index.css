@@ -2,6 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  /* Complete reset and custom checkbox styling */
+  input[type="checkbox"],
+  .form-checkbox {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    width: 1rem !important;
+    height: 1rem !important;
+    border: 1px solid rgb(209 213 219) !important;
+    border-radius: 0.25rem !important;
+    background-color: white !important;
+    background-image: none !important;
+    cursor: pointer !important;
+    position: relative !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+  }
+
+  /* Checked state */
+  input[type="checkbox"]:checked,
+  .form-checkbox:checked {
+    background-color: rgb(37 99 235) !important;
+    border-color: rgb(37 99 235) !important;
+    background-image: none !important;
+  }
+
+  /* Add checkmark for checked state */
+  input[type="checkbox"]:checked::after,
+  .form-checkbox:checked::after {
+    content: '' !important;
+    position: absolute !important;
+    left: 3px !important;
+    top: 0px !important;
+    width: 5px !important;
+    height: 9px !important;
+    border: solid white !important;
+    border-width: 0 2px 2px 0 !important;
+    transform: rotate(45deg) !important;
+  }
+
+  /* Focus state */
+  input[type="checkbox"]:focus,
+  .form-checkbox:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px white, 0 0 0 4px rgb(59 130 246 / 0.5) !important;
+  }
+
+  /* Hover state */
+  input[type="checkbox"]:hover:not(:checked),
+  .form-checkbox:hover:not(:checked) {
+    border-color: rgb(156 163 175) !important;
+  }
+
+  /* Disabled state */
+  input[type="checkbox"]:disabled,
+  .form-checkbox:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+  }
+}
+
+/* Global checkbox reset - apply before any other styles */
+* {
+  --checkbox-bg: white;
+}
+
+input[type="checkbox"] {
+  background: var(--checkbox-bg) !important;
+  background-color: var(--checkbox-bg) !important;
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

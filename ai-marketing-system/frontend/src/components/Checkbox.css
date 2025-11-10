@@ -1,0 +1,41 @@
+/* Custom Checkbox Component Styles */
+.custom-checkbox {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  width: 16px !important;
+  height: 16px !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 4px !important;
+  background-color: #ffffff !important;
+  cursor: pointer !important;
+  position: relative !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  transition: all 0.15s ease !important;
+}
+
+.custom-checkbox:checked {
+  background-color: #2563eb !important;
+  border-color: #2563eb !important;
+}
+
+.custom-checkbox:checked::after {
+  content: '✓' !important;
+  position: absolute !important;
+  top: -2px !important;
+  left: 2px !important;
+  color: white !important;
+  font-size: 12px !important;
+  font-weight: bold !important;
+}
+
+.custom-checkbox:hover:not(:checked) {
+  border-color: #9ca3af !important;
+  background-color: #ffffff !important;
+}
+
+.custom-checkbox:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important;
+}
