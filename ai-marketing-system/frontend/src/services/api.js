@@ -283,4 +283,45 @@ export const leadTrackingAPI = {
   getQualityDistribution: () => api.get('/api/lead-tracking/analytics/lead-quality'),
 }
 
+// Website Forms API
+export const websiteFormsAPI = {
+  getAll: (params) => api.get('/api/website-forms/', { params }),
+  getById: (id) => api.get(`/api/website-forms/${id}`),
+  create: (data) => api.post('/api/website-forms/', data),
+  update: (id, data) => api.put(`/api/website-forms/${id}`, data),
+  delete: (id) => api.delete(`/api/website-forms/${id}`),
+  getStats: (id) => api.get(`/api/website-forms/${id}/stats`),
+  getSubmissions: (id, params) => api.get(`/api/website-forms/${id}/submissions`, { params }),
+  submitForm: (id, data) => api.post(`/api/website-forms/${id}/submissions`, data),
+  getEmbedCode: (id) => api.get(`/api/website-forms/embed/${id}.js`),
+}
+
+// Lead Analytics API
+export const leadAnalyticsAPI = {
+  getSummary: (period = 'month') => api.get('/api/lead-analytics/summary', { params: { period } }),
+  getAll: (params) => api.get('/api/lead-analytics/', { params }),
+  create: (data) => api.post('/api/lead-analytics/', data),
+  update: (id, data) => api.put(`/api/lead-analytics/${id}`, data),
+  delete: (id) => api.delete(`/api/lead-analytics/${id}`),
+  getSourcePerformance: (params) => api.get('/api/lead-analytics/sources', { params }),
+  createSourcePerformance: (data) => api.post('/api/lead-analytics/sources', data),
+  generateSampleData: (days = 30) => api.post('/api/lead-analytics/generate-sample-data', null, { params: { days } }),
+}
+
+// Meta A/B Tests API
+export const metaABTestsAPI = {
+  verifyAccount: (adAccountId) => api.get(`/api/meta-ab-tests/verify-account/${adAccountId}`),
+  getAll: (params) => api.get('/api/meta-ab-tests/', { params }),
+  getStats: () => api.get('/api/meta-ab-tests/stats'),
+  getById: (id) => api.get(`/api/meta-ab-tests/${id}`),
+  getAnalysis: (id) => api.get(`/api/meta-ab-tests/${id}/analysis`),
+  create: (data) => api.post('/api/meta-ab-tests/', data),
+  update: (id, data) => api.put(`/api/meta-ab-tests/${id}`, data),
+  delete: (id) => api.delete(`/api/meta-ab-tests/${id}`),
+  start: (id) => api.post(`/api/meta-ab-tests/${id}/start`),
+  pause: (id) => api.post(`/api/meta-ab-tests/${id}/pause`),
+  refreshResults: (id) => api.post(`/api/meta-ab-tests/${id}/refresh-results`),
+  declareWinner: (id, data) => api.post(`/api/meta-ab-tests/${id}/declare-winner`, data),
+}
+
 export default api

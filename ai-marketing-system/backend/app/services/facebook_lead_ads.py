@@ -76,20 +76,60 @@ class FacebookLeadAdsService:
     async def get_lead_forms(self, page_id: str) -> List[Dict]:
         """Get all Lead Ad forms for a Facebook Page"""
         try:
+            # First, get the page access token for this specific page
+            page_token = None
+            try:
+                async with httpx.AsyncClient(timeout=30.0) as client:
+                    # Get page access token
+                    pages_response = await client.get(
+                        f"{self.base_url}/me/accounts",
+                        params={
+                            "access_token": self.access_token,
+                            "fields": "id,name,access_token"
+                        }
+                    )
+                    pages_response.raise_for_status()
+                    pages_data = pages_response.json()
+
+                    # Find the specific page and get its token
+                    for page in pages_data.get("data", []):
+                        if page.get("id") == page_id:
+                            page_token = page.get("access_token")
+                            break
+
+                    if not page_token:
+                        print(f"Warning: No page token found for page {page_id}, using user token")
+                        page_token = self.access_token
+
+            except Exception as e:
+                print(f"Error getting page token: {str(e)}, using user token")
+                page_token = self.access_token
+
             async with httpx.AsyncClient(timeout=30.0) as client:
+                # Use the page access token for this request
                 response = await client.get(
                     f"{self.base_url}/{page_id}/leadgen_forms",
                     params={
-                        "access_token": self.access_token,
+                        "access_token": page_token,  # Use page token instead of user token
                         "fields": "id,name,status,leads_count,created_time,questions"
                     }
                 )
+
+                # Log the response for debugging
+                print(f"Lead forms response status: {response.status_code}")
+                if response.status_code != 200:
+                    print(f"Response content: {response.text}")
+
                 response.raise_for_status()
                 data = response.json()
 
                 return data.get("data", [])
 
+        except httpx.HTTPStatusError as e:
+            print(f"HTTP Error: {e.response.status_code} - {e.response.text}")
+            raise Exception(f"Failed to fetch lead forms: HTTP {e.response.status_code} - {e.response.text}")
         except Exception as e:
+            print(f"Unexpected error in get_lead_forms: {str(e)}")
             raise Exception(f"Failed to fetch lead forms: {str(e)}")
 
     async def get_pages(self) -> List[Dict]:

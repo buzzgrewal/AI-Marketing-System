@@ -17,6 +17,7 @@ import {
   Target,
   Layout,
   TrendingUp,
+  Facebook,
 } from 'lucide-react'
 
 const navigation = [
@@ -29,6 +30,7 @@ const navigation = [
   { name: 'Outreach', href: '/outreach', icon: Send },
   { name: 'Ad Retargeting', href: '/retargeting', icon: Target },
   { name: 'A/B Testing', href: '/ab-tests', icon: FlaskConical },
+  { name: 'Meta A/B Tests', href: '/meta-ab-tests', icon: Facebook },
   { name: 'Content Generator', href: '/content', icon: Sparkles },
   { name: 'Email Templates', href: '/templates', icon: FileText },
   { name: 'Social Scheduling', href: '/scheduling', icon: Calendar },

@@ -6,10 +6,10 @@ import os
 from app.core.config import settings
 from app.db.base import Base
 from app.db.session import engine
-from app.api.routes import auth, leads, campaigns, content, email_templates, social_scheduling, segments, ab_tests, webhooks, shopify, facebook_leads, lead_forms, outreach, retargeting, lead_tracking
+from app.api.routes import auth, leads, campaigns, content, email_templates, social_scheduling, segments, ab_tests, webhooks, shopify, facebook_leads, lead_forms, outreach, retargeting, lead_tracking, website_forms, lead_analytics, meta_ab_tests
 
 # Import models to ensure tables are created
-from app.models import lead_form  # noqa: F401
+from app.models import lead_form, website_form, lead_analytics as lead_analytics_models, meta_ab_test  # noqa: F401
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -50,6 +50,9 @@ app.include_router(lead_forms.router, prefix="/api/forms", tags=["Lead Forms"])
 app.include_router(outreach.router, prefix="/api/outreach", tags=["Outreach Generation"])
 app.include_router(retargeting.router, prefix="/api/retargeting", tags=["Ad Retargeting"])
 app.include_router(lead_tracking.router, prefix="/api/lead-tracking", tags=["Lead Tracking & Analytics"])
+app.include_router(website_forms.router, prefix="/api/website-forms", tags=["Website Forms"])
+app.include_router(lead_analytics.router, prefix="/api/lead-analytics", tags=["Lead Analytics"])
+app.include_router(meta_ab_tests.router, prefix="/api/meta-ab-tests", tags=["Meta A/B Tests"])
 
 
 @app.get("/")

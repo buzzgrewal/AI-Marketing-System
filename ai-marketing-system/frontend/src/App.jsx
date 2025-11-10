@@ -20,6 +20,7 @@ import TemplatesPage from './pages/TemplatesPage'
 import SchedulingPage from './pages/SchedulingPage'
 import SegmentsPage from './pages/SegmentsPage'
 import ABTestPage from './pages/ABTestPage'
+import MetaABTestPage from './pages/MetaABTestPage'
 import WebhooksPage from './pages/WebhooksPage'
 import ShopifyPage from './pages/ShopifyPage'
 import OutreachPage from './pages/OutreachPage'
@@ -51,6 +52,7 @@ function App() {
             <Route path="outreach" element={<OutreachPage />} />
             <Route path="retargeting" element={<RetargetingPage />} />
             <Route path="ab-tests" element={<ABTestPage />} />
+            <Route path="meta-ab-tests" element={<MetaABTestPage />} />
             <Route path="content" element={<ContentPage />} />
             <Route path="templates" element={<TemplatesPage />} />
             <Route path="scheduling" element={<SchedulingPage />} />
