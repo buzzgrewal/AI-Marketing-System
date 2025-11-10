@@ -59,11 +59,33 @@ const SegmentsPage = () => {
   const fetchAvailableFields = async () => {
     try {
       const fields = await segmentsAPI.getAvailableFields();
-      setAvailableFields(fields);
+      // Ensure fields is always an array
+      if (Array.isArray(fields)) {
+        setAvailableFields(fields);
+      } else {
+        console.error('Invalid fields format received:', fields);
+        // Set default fields as fallback
+        setAvailableFields(getDefaultFields());
+      }
     } catch (error) {
       console.error('Error fetching available fields:', error);
+      // Set default fields as fallback when API fails
+      setAvailableFields(getDefaultFields());
     }
   };
+
+  // Default fields fallback
+  const getDefaultFields = () => [
+    { name: 'sport_type', label: 'Sport Type', operators: ['equals', 'not_equals', 'contains'] },
+    { name: 'name', label: 'Name', operators: ['equals', 'not_equals', 'contains', 'starts_with'] },
+    { name: 'email', label: 'Email', operators: ['equals', 'not_equals', 'contains', 'ends_with'] },
+    { name: 'location', label: 'Location', operators: ['equals', 'not_equals', 'contains'] },
+    { name: 'company', label: 'Company', operators: ['equals', 'not_equals', 'contains'] },
+    { name: 'lead_score', label: 'Lead Score', operators: ['equals', 'greater_than', 'less_than', 'between'] },
+    { name: 'status', label: 'Status', operators: ['equals', 'not_equals'] },
+    { name: 'created_at', label: 'Created Date', operators: ['before', 'after', 'between'] },
+    { name: 'updated_at', label: 'Updated Date', operators: ['before', 'after', 'between'] },
+  ];
 
   const fetchStats = async () => {
     try {
@@ -143,7 +165,9 @@ const SegmentsPage = () => {
   const handlePreview = async (segment) => {
     try {
       setLoading(true);
-      const leads = await segmentsAPI.preview(segment.id);
+      const response = await segmentsAPI.preview(segment.id);
+      // Handle both array and object response formats
+      const leads = Array.isArray(response) ? response : (response.leads || []);
       setPreviewLeads(leads);
       setEditingSegment(segment);
       setShowPreview(true);
@@ -233,7 +257,8 @@ const SegmentsPage = () => {
   };
 
   const getOperatorsForField = (fieldName) => {
-    const field = availableFields.find(f => f.name === fieldName);
+    const fieldsArray = Array.isArray(availableFields) ? availableFields : getDefaultFields();
+    const field = fieldsArray.find(f => f.name === fieldName);
     return field?.operators || ['equals', 'not_equals'];
   };
 
@@ -487,7 +512,12 @@ const SegmentsPage = () => {
                       type="text"
                       value={tagInput}
                       onChange={(e) => setTagInput(e.target.value)}
-                      onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          addTag();
+                        }
+                      }}
                       className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder="Add a tag..."
                     />
@@ -544,7 +574,7 @@ const SegmentsPage = () => {
                           onChange={(e) => updateCondition(index, 'field', e.target.value)}
                           className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                         >
-                          {availableFields.map((field) => (
+                          {(Array.isArray(availableFields) ? availableFields : getDefaultFields()).map((field) => (
                             <option key={field.name} value={field.name}>
                               {field.label}
                             </option>

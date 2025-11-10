@@ -133,7 +133,7 @@ export const segmentsAPI = {
   refresh: (id) => api.post(`/api/segments/${id}/refresh`),
   getLeads: (id, params) => api.get(`/api/segments/${id}/leads`, { params }),
   duplicate: (id) => api.post(`/api/segments/${id}/duplicate`),
-  getAvailableFields: () => api.get('/api/segments/fields/available').then(res => res.data),
+  getAvailableFields: () => api.get('/api/segments/fields/available').then(res => res.data.fields || []),
   getStats: () => api.get('/api/segments/stats/overview').then(res => res.data),
 }
 
