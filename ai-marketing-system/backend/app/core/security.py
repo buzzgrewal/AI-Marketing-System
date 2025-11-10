@@ -10,17 +10,36 @@ from app.core.config import settings
 from app.db.session import get_db
 from app.models.user import User
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Use Argon2 for password hashing - more secure and no length limitations
+# Argon2 is the winner of the Password Hashing Competition and is recommended by OWASP
+pwd_context = CryptContext(
+    schemes=["argon2", "bcrypt"],  # argon2 for new passwords, bcrypt for backward compatibility
+    deprecated="auto",
+    argon2__rounds=2,  # Number of iterations
+    argon2__memory_cost=15360,  # Memory usage in kibibytes (15MB)
+    argon2__parallelism=1,  # Number of parallel threads
+)
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    """Verify a password against its hash"""
-    return pwd_context.verify(plain_password, hashed_password)
+    """
+    Verify a password against its hash
+    Supports both Argon2 and bcrypt hashes for compatibility
+    """
+    try:
+        return pwd_context.verify(plain_password, hashed_password)
+    except Exception as e:
+        # Log the error for debugging but don't expose it
+        print(f"Password verification error: {e}")
+        return False
 
 
 def get_password_hash(password: str) -> str:
-    """Hash a password"""
+    """
+    Hash a password using Argon2
+    Argon2 handles passwords of any length without issues
+    """
     return pwd_context.hash(password)
 
 

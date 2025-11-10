@@ -10,7 +10,8 @@ psycopg2-binary
 
 # Authentication & Security
 python-jose[cryptography]
-passlib[bcrypt]
+passlib[bcrypt,argon2]
+argon2-cffi
 python-dotenv
 pydantic
 pydantic-settings

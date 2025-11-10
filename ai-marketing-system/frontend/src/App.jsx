@@ -1,5 +1,13 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
+import { AuthProvider } from './hooks/useAuth'
+
+// Auth Components
+import ProtectedRoute from './components/ProtectedRoute'
+
+// Auth Pages
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
 
 // Pages
 import DashboardPage from './pages/DashboardPage'
@@ -25,31 +33,37 @@ import Layout from './components/common/Layout'
 function App() {
   return (
     <Router>
-      <Toaster position="top-right" />
-      <Routes>
-        {/* All Routes - No Auth Required */}
-        <Route path="/" element={<Layout />}>
-          <Route index element={<DashboardPage />} />
-          <Route path="leads" element={<LeadsPage />} />
-          <Route path="lead-sourcing" element={<LeadSourcingPage />} />
-          <Route path="form-builder" element={<FormBuilderPage />} />
-          <Route path="segments" element={<SegmentsPage />} />
-          <Route path="campaigns" element={<CampaignsPage />} />
-          <Route path="outreach" element={<OutreachPage />} />
-          <Route path="retargeting" element={<RetargetingPage />} />
-          <Route path="ab-tests" element={<ABTestPage />} />
-          <Route path="content" element={<ContentPage />} />
-          <Route path="templates" element={<TemplatesPage />} />
-          <Route path="scheduling" element={<SchedulingPage />} />
-          <Route path="webhooks" element={<WebhooksPage />} />
-          <Route path="shopify" element={<ShopifyPage />} />
-          <Route path="analytics" element={<AnalyticsPage />} />
-          <Route path="lead-analytics" element={<LeadAnalyticsPage />} />
-        </Route>
+      <AuthProvider>
+        <Toaster position="top-right" />
+        <Routes>
+          {/* Auth Routes */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
 
-        {/* Catch all */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+          {/* Protected Routes */}
+          <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+            <Route index element={<DashboardPage />} />
+            <Route path="leads" element={<LeadsPage />} />
+            <Route path="lead-sourcing" element={<LeadSourcingPage />} />
+            <Route path="form-builder" element={<FormBuilderPage />} />
+            <Route path="segments" element={<SegmentsPage />} />
+            <Route path="campaigns" element={<CampaignsPage />} />
+            <Route path="outreach" element={<OutreachPage />} />
+            <Route path="retargeting" element={<RetargetingPage />} />
+            <Route path="ab-tests" element={<ABTestPage />} />
+            <Route path="content" element={<ContentPage />} />
+            <Route path="templates" element={<TemplatesPage />} />
+            <Route path="scheduling" element={<SchedulingPage />} />
+            <Route path="webhooks" element={<WebhooksPage />} />
+            <Route path="shopify" element={<ShopifyPage />} />
+            <Route path="analytics" element={<AnalyticsPage />} />
+            <Route path="lead-analytics" element={<LeadAnalyticsPage />} />
+          </Route>
+
+          {/* Catch all */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </AuthProvider>
     </Router>
   )
 }

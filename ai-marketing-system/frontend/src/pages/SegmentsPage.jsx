@@ -2,6 +2,19 @@ import { useState, useEffect } from 'react';
 import { segmentsAPI } from '../services/api';
 import { Users, Plus, Search, Edit2, Trash2, Copy, RefreshCw, Eye, Filter } from 'lucide-react';
 
+// Default fields constant
+const DEFAULT_FIELDS = [
+  { name: 'sport_type', label: 'Sport Type', operators: ['equals', 'not_equals', 'contains'] },
+  { name: 'name', label: 'Name', operators: ['equals', 'not_equals', 'contains', 'starts_with'] },
+  { name: 'email', label: 'Email', operators: ['equals', 'not_equals', 'contains', 'ends_with'] },
+  { name: 'location', label: 'Location', operators: ['equals', 'not_equals', 'contains'] },
+  { name: 'company', label: 'Company', operators: ['equals', 'not_equals', 'contains'] },
+  { name: 'lead_score', label: 'Lead Score', operators: ['equals', 'greater_than', 'less_than', 'between'] },
+  { name: 'status', label: 'Status', operators: ['equals', 'not_equals'] },
+  { name: 'created_at', label: 'Created Date', operators: ['before', 'after', 'between'] },
+  { name: 'updated_at', label: 'Updated Date', operators: ['before', 'after', 'between'] },
+];
+
 const SegmentsPage = () => {
   const [segments, setSegments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,13 +24,13 @@ const SegmentsPage = () => {
   const [previewLeads, setPreviewLeads] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('all');
-  const [availableFields, setAvailableFields] = useState([]);
+  const [availableFields, setAvailableFields] = useState(DEFAULT_FIELDS);
   
   // Form state
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    type: 'dynamic',
+    segment_type: 'dynamic',
     tags: [],
     criteria: {
       logic: 'AND',
@@ -60,32 +73,19 @@ const SegmentsPage = () => {
     try {
       const fields = await segmentsAPI.getAvailableFields();
       // Ensure fields is always an array
-      if (Array.isArray(fields)) {
+      if (Array.isArray(fields) && fields.length > 0) {
         setAvailableFields(fields);
       } else {
         console.error('Invalid fields format received:', fields);
-        // Set default fields as fallback
-        setAvailableFields(getDefaultFields());
+        // Keep default fields as fallback
+        setAvailableFields(DEFAULT_FIELDS);
       }
     } catch (error) {
       console.error('Error fetching available fields:', error);
-      // Set default fields as fallback when API fails
-      setAvailableFields(getDefaultFields());
+      // Keep default fields as fallback when API fails
+      setAvailableFields(DEFAULT_FIELDS);
     }
   };
-
-  // Default fields fallback
-  const getDefaultFields = () => [
-    { name: 'sport_type', label: 'Sport Type', operators: ['equals', 'not_equals', 'contains'] },
-    { name: 'name', label: 'Name', operators: ['equals', 'not_equals', 'contains', 'starts_with'] },
-    { name: 'email', label: 'Email', operators: ['equals', 'not_equals', 'contains', 'ends_with'] },
-    { name: 'location', label: 'Location', operators: ['equals', 'not_equals', 'contains'] },
-    { name: 'company', label: 'Company', operators: ['equals', 'not_equals', 'contains'] },
-    { name: 'lead_score', label: 'Lead Score', operators: ['equals', 'greater_than', 'less_than', 'between'] },
-    { name: 'status', label: 'Status', operators: ['equals', 'not_equals'] },
-    { name: 'created_at', label: 'Created Date', operators: ['before', 'after', 'between'] },
-    { name: 'updated_at', label: 'Updated Date', operators: ['before', 'after', 'between'] },
-  ];
 
   const fetchStats = async () => {
     try {
@@ -101,7 +101,7 @@ const SegmentsPage = () => {
     setFormData({
       name: '',
       description: '',
-      type: 'dynamic',
+      segment_type: 'dynamic',
       tags: [],
       criteria: {
         logic: 'AND',
@@ -122,7 +122,7 @@ const SegmentsPage = () => {
     setFormData({
       name: segment.name,
       description: segment.description || '',
-      type: segment.type,
+      segment_type: segment.segment_type || segment.type || 'dynamic',
       tags: segment.tags || [],
       criteria: segment.criteria
     });
@@ -197,6 +197,9 @@ const SegmentsPage = () => {
   };
 
   const addCondition = () => {
+    const defaultField = availableFields[0]?.name || 'sport_type';
+    const defaultOperator = getOperatorsForField(defaultField)[0] || 'equals';
+
     setFormData({
       ...formData,
       criteria: {
@@ -204,8 +207,8 @@ const SegmentsPage = () => {
         conditions: [
           ...formData.criteria.conditions,
           {
-            field: 'sport_type',
-            operator: 'equals',
+            field: defaultField,
+            operator: defaultOperator,
             value: ''
           }
         ]
@@ -257,15 +260,15 @@ const SegmentsPage = () => {
   };
 
   const getOperatorsForField = (fieldName) => {
-    const fieldsArray = Array.isArray(availableFields) ? availableFields : getDefaultFields();
-    const field = fieldsArray.find(f => f.name === fieldName);
+    const field = availableFields.find(f => f.name === fieldName);
     return field?.operators || ['equals', 'not_equals'];
   };
 
   const filteredSegments = segments.filter(segment => {
     const matchesSearch = segment.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          (segment.description && segment.description.toLowerCase().includes(searchTerm.toLowerCase()));
-    const matchesType = selectedType === 'all' || segment.type === selectedType;
+    const segmentType = segment.segment_type || segment.type || 'dynamic';
+    const matchesType = selectedType === 'all' || segmentType === selectedType;
     return matchesSearch && matchesType;
   });
 
@@ -347,9 +350,9 @@ const SegmentsPage = () => {
             onChange={(e) => setSelectedType(e.target.value)}
             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
-            <option value="all">All Types</option>
-            <option value="dynamic">Dynamic</option>
-            <option value="static">Static</option>
+            <option key="all" value="all">All Types</option>
+            <option key="dynamic" value="dynamic">Dynamic</option>
+            <option key="static" value="static">Static</option>
           </select>
         </div>
       </div>
@@ -374,11 +377,11 @@ const SegmentsPage = () => {
                     <div className="flex items-center gap-3 mb-2">
                       <h3 className="text-lg font-semibold text-gray-900">{segment.name}</h3>
                       <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                        segment.type === 'dynamic' 
-                          ? 'bg-blue-100 text-blue-700' 
+                        (segment.segment_type || segment.type || 'dynamic') === 'dynamic'
+                          ? 'bg-blue-100 text-blue-700'
                           : 'bg-gray-100 text-gray-700'
                       }`}>
-                        {segment.type}
+                        {segment.segment_type || segment.type || 'dynamic'}
                       </span>
                     </div>
                     {segment.description && (
@@ -491,12 +494,12 @@ const SegmentsPage = () => {
                     Segment Type *
                   </label>
                   <select
-                    value={formData.type}
-                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                    value={formData.segment_type}
+                    onChange={(e) => setFormData({ ...formData, segment_type: e.target.value })}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
-                    <option value="dynamic">Dynamic (Auto-updates)</option>
-                    <option value="static">Static (Fixed)</option>
+                    <option key="dynamic" value="dynamic">Dynamic (Auto-updates)</option>
+                    <option key="static" value="static">Static (Fixed)</option>
                   </select>
                   <p className="text-sm text-gray-500 mt-1">
                     Dynamic segments automatically update as leads change. Static segments are fixed at creation.
@@ -560,21 +563,30 @@ const SegmentsPage = () => {
                     })}
                     className="px-3 py-1 border border-gray-300 rounded text-sm"
                   >
-                    <option value="AND">Match ALL conditions (AND)</option>
-                    <option value="OR">Match ANY condition (OR)</option>
+                    <option key="AND" value="AND">Match ALL conditions (AND)</option>
+                    <option key="OR" value="OR">Match ANY condition (OR)</option>
                   </select>
                 </div>
 
                 <div className="space-y-3">
-                  {formData.criteria.conditions.map((condition, index) => (
+                  {formData.criteria.conditions.map((condition, index) => {
+                    const operators = getOperatorsForField(condition.field);
+                    const fieldValue = availableFields.find(f => f.name === condition.field)
+                      ? condition.field
+                      : availableFields[0]?.name || 'sport_type';
+                    const operatorValue = operators.includes(condition.operator)
+                      ? condition.operator
+                      : operators[0] || 'equals';
+
+                    return (
                     <div key={index} className="flex gap-2 items-start p-4 bg-gray-50 rounded-lg">
                       <div className="flex-1 grid grid-cols-3 gap-2">
                         <select
-                          value={condition.field}
+                          value={fieldValue}
                           onChange={(e) => updateCondition(index, 'field', e.target.value)}
                           className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                         >
-                          {(Array.isArray(availableFields) ? availableFields : getDefaultFields()).map((field) => (
+                          {availableFields.map((field) => (
                             <option key={field.name} value={field.name}>
                               {field.label}
                             </option>
@@ -582,11 +594,11 @@ const SegmentsPage = () => {
                         </select>
 
                         <select
-                          value={condition.operator}
+                          value={operatorValue}
                           onChange={(e) => updateCondition(index, 'operator', e.target.value)}
                           className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                         >
-                          {getOperatorsForField(condition.field).map((op) => (
+                          {operators.map((op) => (
                             <option key={op} value={op}>
                               {op.replace('_', ' ')}
                             </option>
@@ -612,7 +624,8 @@ const SegmentsPage = () => {
                         </button>
                       )}
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
 
                 <button

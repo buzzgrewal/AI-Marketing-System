@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { leadFormsAPI } from '../services/api'
 import {
   Plus, Trash2, Eye, Code, Copy, Settings, Save, Edit,
   GripVertical, Type, Mail, Phone, MessageSquare, CheckSquare, List
 } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 const FIELD_TYPES = [
   { value: 'text', label: 'Text Input', icon: Type },
@@ -15,6 +17,7 @@ const FIELD_TYPES = [
 ]
 
 export default function FormBuilderPage() {
+  const navigate = useNavigate()
   const [forms, setForms] = useState([])
   const [selectedForm, setSelectedForm] = useState(null)
   const [activeTab, setActiveTab] = useState('list') // list, builder, preview, embed
@@ -56,6 +59,13 @@ export default function FormBuilderPage() {
       setForms(response.data)
     } catch (err) {
       console.error('Error fetching forms:', err)
+      if (err.response?.status === 401) {
+        toast.error('Session expired. Please login again.')
+        localStorage.removeItem('token')
+        navigate('/login')
+      } else {
+        setError(err.response?.data?.detail || 'Failed to fetch forms')
+      }
     }
   }
 
