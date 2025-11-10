@@ -130,22 +130,22 @@ export default function LeadAnalyticsPage() {
   ]
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="space-y-4 sm:space-y-6 w-full overflow-hidden">
       {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Lead Analytics & Insights</h1>
-        <p className="text-gray-600">
+      <div className="mb-4 sm:mb-6">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Lead Analytics & Insights</h1>
+        <p className="text-sm sm:text-base text-gray-600">
           Comprehensive tracking, attribution, and performance metrics
         </p>
       </div>
 
       {/* Date Range Filter */}
-      <div className="mb-6 flex items-center gap-4">
+      <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
         <label className="text-sm font-medium text-gray-700">Time Period:</label>
         <select
           value={dateRange}
           onChange={(e) => setDateRange(Number(e.target.value))}
-          className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full sm:w-auto px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base bg-white"
         >
           <option value={7}>Last 7 Days</option>
           <option value={30}>Last 30 Days</option>
@@ -156,8 +156,8 @@ export default function LeadAnalyticsPage() {
       </div>
 
       {/* Tabs */}
-      <div className="mb-6 border-b border-gray-200">
-        <nav className="flex space-x-8">
+      <div className="mb-4 sm:mb-6 border-b border-gray-200 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+        <nav className="flex space-x-4 sm:space-x-8 min-w-max">
           {tabs.map((tab) => {
             const Icon = tab.icon
             return (
@@ -165,15 +165,16 @@ export default function LeadAnalyticsPage() {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`
-                  flex items-center gap-2 py-4 px-2 border-b-2 font-medium text-sm transition-colors
+                  flex items-center gap-1 sm:gap-2 py-3 sm:py-4 px-1 sm:px-2 border-b-2 font-medium text-xs sm:text-sm transition-colors whitespace-nowrap
                   ${activeTab === tab.id
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                   }
                 `}
               >
-                <Icon size={18} />
-                {tab.name}
+                <Icon size={16} className="sm:w-[18px] sm:h-[18px]" />
+                <span className="hidden sm:inline">{tab.name}</span>
+                <span className="sm:hidden">{tab.name.split(' ')[0]}</span>
               </button>
             )
           })}
@@ -191,7 +192,7 @@ export default function LeadAnalyticsPage() {
           {activeTab === 'overview' && (
             <div className="space-y-6">
               {/* Key Metrics */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 {journeyData && (
                   <>
                     <MetricCard
@@ -223,10 +224,10 @@ export default function LeadAnalyticsPage() {
               </div>
 
               {/* Charts Row 1 */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {/* Lifecycle Funnel */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Lifecycle Funnel</h3>
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Lifecycle Funnel</h3>
                   {funnelData.length > 0 ? (
                     <ResponsiveContainer width="100%" height={300}>
                       <BarChart data={funnelData}>
@@ -243,8 +244,8 @@ export default function LeadAnalyticsPage() {
                 </div>
 
                 {/* Lead Quality Distribution */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Lead Quality by Grade</h3>
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Lead Quality by Grade</h3>
                   {qualityData && Object.keys(qualityData.by_grade || {}).length > 0 ? (
                     <ResponsiveContainer width="100%" height={300}>
                       <RePieChart>
@@ -275,10 +276,10 @@ export default function LeadAnalyticsPage() {
               </div>
 
               {/* Charts Row 2 */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {/* Engagement by Type */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Engagement by Type</h3>
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Engagement by Type</h3>
                   {engagementData && Object.keys(engagementData.by_type || {}).length > 0 ? (
                     <ResponsiveContainer width="100%" height={300}>
                       <BarChart
@@ -301,8 +302,8 @@ export default function LeadAnalyticsPage() {
                 </div>
 
                 {/* Attribution by Type */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Conversions by Type</h3>
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Conversions by Type</h3>
                   {attributionData && attributionData.conversions_by_type?.length > 0 ? (
                     <ResponsiveContainer width="100%" height={300}>
                       <BarChart data={attributionData.conversions_by_type}>
@@ -326,8 +327,8 @@ export default function LeadAnalyticsPage() {
 
           {/* Lifecycle Funnel Tab */}
           {activeTab === 'funnel' && (
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Lead Lifecycle Funnel</h2>
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">Lead Lifecycle Funnel</h2>
               {funnelData.length > 0 ? (
                 <>
                   <ResponsiveContainer width="100%" height={400}>
@@ -342,9 +343,9 @@ export default function LeadAnalyticsPage() {
                   </ResponsiveContainer>
 
                   {/* Stage Details Table */}
-                  <div className="mt-8">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Stage Breakdown</h3>
-                    <div className="overflow-x-auto">
+                  <div className="mt-6 sm:mt-8">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Stage Breakdown</h3>
+                    <div className="overflow-x-auto -mx-4 sm:mx-0">
                       <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-50">
                           <tr>
@@ -390,11 +391,11 @@ export default function LeadAnalyticsPage() {
 
           {/* Lead Quality Tab */}
           {activeTab === 'quality' && (
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {qualityData ? (
                 <>
                   {/* Quality Metrics */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
                     <MetricCard
                       icon={Award}
                       title="Average Score"
@@ -416,9 +417,9 @@ export default function LeadAnalyticsPage() {
                   </div>
 
                   {/* Charts */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribution by Grade</h3>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Distribution by Grade</h3>
                       <ResponsiveContainer width="100%" height={300}>
                         <RePieChart>
                           <Pie
@@ -472,7 +473,7 @@ export default function LeadAnalyticsPage() {
               {engagementData ? (
                 <>
                   {/* Engagement Metrics */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
                     <MetricCard
                       icon={Activity}
                       title="Total Engagements"
@@ -494,9 +495,9 @@ export default function LeadAnalyticsPage() {
                   </div>
 
                   {/* Charts */}
-                  <div className="grid grid-cols-1 gap-6">
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Engagement by Type</h3>
+                  <div className="grid grid-cols-1 gap-4 sm:gap-6">
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Engagement by Type</h3>
                       <ResponsiveContainer width="100%" height={400}>
                         <BarChart
                           data={Object.entries(engagementData.by_type || {}).map(([type, count]) => ({
@@ -514,8 +515,8 @@ export default function LeadAnalyticsPage() {
                       </ResponsiveContainer>
                     </div>
 
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Engagement by Channel</h3>
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Engagement by Channel</h3>
                       <ResponsiveContainer width="100%" height={300}>
                         <RePieChart>
                           <Pie
@@ -553,7 +554,7 @@ export default function LeadAnalyticsPage() {
               {attributionData ? (
                 <>
                   {/* Attribution Metrics */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
                     <MetricCard
                       icon={Target}
                       title="Total Conversions"
@@ -575,8 +576,8 @@ export default function LeadAnalyticsPage() {
                   </div>
 
                   {/* Charts */}
-                  <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Conversions by Type</h3>
+                  <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Conversions by Type</h3>
                     {attributionData.conversions_by_type?.length > 0 ? (
                       <>
                         <ResponsiveContainer width="100%" height={400}>
@@ -593,9 +594,9 @@ export default function LeadAnalyticsPage() {
                         </ResponsiveContainer>
 
                         {/* Details Table */}
-                        <div className="mt-8">
-                          <h3 className="text-lg font-semibold text-gray-900 mb-4">Conversion Details</h3>
-                          <div className="overflow-x-auto">
+                        <div className="mt-6 sm:mt-8">
+                          <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Conversion Details</h3>
+                          <div className="overflow-x-auto -mx-4 sm:mx-0">
                             <table className="min-w-full divide-y divide-gray-200">
                               <thead className="bg-gray-50">
                                 <tr>
@@ -648,11 +649,11 @@ export default function LeadAnalyticsPage() {
 
           {/* Journey Health Tab */}
           {activeTab === 'journey' && (
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {journeyData ? (
                 <>
                   {/* Journey Metrics */}
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
                     <MetricCard
                       icon={Users}
                       title="Total Journeys"
@@ -718,8 +719,8 @@ export default function LeadAnalyticsPage() {
 
           {/* Cohort Analysis Tab */}
           {activeTab === 'cohort' && (
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Monthly Cohort Analysis</h2>
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">Monthly Cohort Analysis</h2>
               {cohortData.length > 0 ? (
                 <>
                   <ResponsiveContainer width="100%" height={400}>
@@ -740,9 +741,9 @@ export default function LeadAnalyticsPage() {
                   </ResponsiveContainer>
 
                   {/* Cohort Table */}
-                  <div className="mt-8">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Cohort Details</h3>
-                    <div className="overflow-x-auto">
+                  <div className="mt-6 sm:mt-8">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Cohort Details</h3>
+                    <div className="overflow-x-auto -mx-4 sm:mx-0">
                       <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-50">
                           <tr>
@@ -804,14 +805,14 @@ function MetricCard({ icon: Icon, title, value, color }) {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium text-gray-600 mb-1">{title}</p>
-          <p className="text-2xl font-bold text-gray-900">{value}</p>
+          <p className="text-xs sm:text-sm font-medium text-gray-600 mb-1">{title}</p>
+          <p className="text-xl sm:text-2xl font-bold text-gray-900">{value}</p>
         </div>
-        <div className={`p-3 rounded-lg ${colorClasses[color]}`}>
-          <Icon size={24} />
+        <div className={`p-2 sm:p-3 rounded-lg ${colorClasses[color]}`}>
+          <Icon size={20} className="sm:w-6 sm:h-6" />
         </div>
       </div>
     </div>
