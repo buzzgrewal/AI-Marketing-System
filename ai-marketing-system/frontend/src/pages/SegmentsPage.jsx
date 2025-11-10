@@ -275,14 +275,14 @@ const SegmentsPage = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Lead Segments</h1>
-          <p className="text-gray-600">Create and manage lead segments for targeted campaigns</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Lead Segments</h1>
+          <p className="text-sm sm:text-base text-gray-600">Create and manage lead segments for targeted campaigns</p>
         </div>
         <button
           onClick={handleCreate}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2"
+          className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2"
         >
           <Plus className="w-5 h-5" />
           New Segment
@@ -290,7 +290,7 @@ const SegmentsPage = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
         <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
@@ -372,10 +372,10 @@ const SegmentsPage = () => {
           <div className="divide-y divide-gray-200">
             {filteredSegments.map((segment) => (
               <div key={segment.id} className="p-6 hover:bg-gray-50 transition-colors">
-                <div className="flex items-start justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                   <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-lg font-semibold text-gray-900">{segment.name}</h3>
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900">{segment.name}</h3>
                       <span className={`px-2 py-1 text-xs font-medium rounded-full ${
                         (segment.segment_type || segment.type || 'dynamic') === 'dynamic'
                           ? 'bg-blue-100 text-blue-700'
@@ -385,20 +385,20 @@ const SegmentsPage = () => {
                       </span>
                     </div>
                     {segment.description && (
-                      <p className="text-gray-600 mb-2">{segment.description}</p>
+                      <p className="text-sm sm:text-base text-gray-600 mb-2">{segment.description}</p>
                     )}
-                    <div className="flex items-center gap-4 text-sm text-gray-500">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-500">
                       <span className="flex items-center gap-1">
                         <Users className="w-4 h-4" />
                         {segment.lead_count} leads
                       </span>
                       <span>Used in {segment.campaign_count} campaigns</span>
                       {segment.last_used && (
-                        <span>Last used: {new Date(segment.last_used).toLocaleDateString()}</span>
+                        <span className="hidden sm:inline">Last used: {new Date(segment.last_used).toLocaleDateString()}</span>
                       )}
                     </div>
                     {segment.tags && segment.tags.length > 0 && (
-                      <div className="flex gap-2 mt-2">
+                      <div className="flex flex-wrap gap-2 mt-2">
                         {segment.tags.map((tag, index) => (
                           <span key={index} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
                             {tag}
@@ -407,41 +407,41 @@ const SegmentsPage = () => {
                       </div>
                     )}
                   </div>
-                  <div className="flex items-center gap-2 ml-4">
+                  <div className="flex items-center gap-1 sm:gap-2">
                     <button
                       onClick={() => handlePreview(segment)}
-                      className="p-2 bg-gray-50 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                      className="p-1.5 sm:p-2 bg-gray-50 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                       title="Preview leads"
                     >
-                      <Eye className="w-5 h-5" />
+                      <Eye className="w-4 sm:w-5 h-4 sm:h-5" />
                     </button>
                     <button
                       onClick={() => handleRefresh(segment.id)}
-                      className="p-2 bg-gray-50 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                      className="p-1.5 sm:p-2 bg-gray-50 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
                       title="Refresh count"
                     >
-                      <RefreshCw className="w-5 h-5" />
+                      <RefreshCw className="w-4 sm:w-5 h-4 sm:h-5" />
                     </button>
                     <button
                       onClick={() => handleDuplicate(segment.id)}
-                      className="p-2 bg-gray-50 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors"
+                      className="p-1.5 sm:p-2 bg-gray-50 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors"
                       title="Duplicate"
                     >
-                      <Copy className="w-5 h-5" />
+                      <Copy className="w-4 sm:w-5 h-4 sm:h-5" />
                     </button>
                     <button
                       onClick={() => handleEdit(segment)}
-                      className="p-2 bg-gray-50 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                      className="p-1.5 sm:p-2 bg-gray-50 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                       title="Edit"
                     >
-                      <Edit2 className="w-5 h-5" />
+                      <Edit2 className="w-4 sm:w-5 h-4 sm:h-5" />
                     </button>
                     <button
                       onClick={() => handleDelete(segment.id)}
-                      className="p-2 bg-gray-50 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      className="p-1.5 sm:p-2 bg-gray-50 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                       title="Delete"
                     >
-                      <Trash2 className="w-5 h-5" />
+                      <Trash2 className="w-4 sm:w-5 h-4 sm:h-5" />
                     </button>
                   </div>
                 </div>
@@ -454,7 +454,7 @@ const SegmentsPage = () => {
       {/* Editor Modal */}
       {showEditor && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-full sm:max-w-2xl lg:max-w-4xl max-h-[90vh] overflow-y-auto">
             <div className="p-6 border-b border-gray-200">
               <h2 className="text-xl font-bold text-gray-900">
                 {editingSegment ? 'Edit Segment' : 'Create New Segment'}
@@ -579,8 +579,8 @@ const SegmentsPage = () => {
                       : operators[0] || 'equals';
 
                     return (
-                    <div key={index} className="flex gap-2 items-start p-4 bg-gray-50 rounded-lg">
-                      <div className="flex-1 grid grid-cols-3 gap-2">
+                    <div key={index} className="flex flex-col sm:flex-row gap-2 items-start p-3 sm:p-4 bg-gray-50 rounded-lg">
+                      <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-2 w-full">
                         <select
                           value={fieldValue}
                           onChange={(e) => updateCondition(index, 'field', e.target.value)}

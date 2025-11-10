@@ -149,26 +149,26 @@ export default function AnalyticsPage() {
   ]
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Analytics</h1>
-        <p className="text-gray-600 mt-1">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">Analytics</h1>
+        <p className="text-sm sm:text-base text-gray-600 mt-1">
           Track your marketing performance and insights
         </p>
       </div>
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {metrics.map((metric) => (
           <div
             key={metric.name}
-            className="bg-white rounded-xl shadow-sm p-6 border border-gray-200"
+            className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-200"
           >
-            <div className="flex items-center justify-between mb-4">
-              <div className={`${metric.color} p-3 rounded-lg`}>
-                <metric.icon className="text-white" size={24} />
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <div className={`${metric.color} p-2.5 sm:p-3 rounded-lg`}>
+                <metric.icon className="text-white" size={20} />
               </div>
-              <p className="text-3xl font-bold text-gray-900">{metric.value}</p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900">{metric.value}</p>
             </div>
             <p className="text-sm font-medium text-gray-900">{metric.name}</p>
             <p className="text-xs text-gray-500 mt-1">{metric.description}</p>
@@ -177,7 +177,7 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Leads Distribution */}
         <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
           <h2 className="text-lg font-bold text-gray-900 mb-4">
@@ -246,7 +246,7 @@ export default function AnalyticsPage() {
       )}
 
       {/* Summary Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
         <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
           <h3 className="text-sm font-medium text-gray-600 mb-2">
             Lead Quality Score

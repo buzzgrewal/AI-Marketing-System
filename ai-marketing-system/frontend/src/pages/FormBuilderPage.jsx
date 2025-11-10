@@ -332,10 +332,10 @@ export default function FormBuilderPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Form Builder</h1>
-          <p className="text-gray-600 mt-1">Create beautiful lead capture forms for your website</p>
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">Form Builder</h1>
+          <p className="text-sm sm:text-base text-gray-600 mt-1">Create beautiful lead capture forms for your website</p>
         </div>
         <button
           onClick={() => {
@@ -363,7 +363,7 @@ export default function FormBuilderPage() {
             })
             setActiveTab('builder')
           }}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
         >
           <Plus size={20} />
           New Form
@@ -383,8 +383,8 @@ export default function FormBuilderPage() {
       )}
 
       {/* Tabs */}
-      <div className="border-b border-gray-200">
-        <nav className="-mb-px flex space-x-8">
+      <div className="border-b border-gray-200 overflow-x-auto">
+        <nav className="-mb-px flex space-x-4 sm:space-x-8 min-w-max">
           <button
             onClick={() => setActiveTab('list')}
             className={`py-4 px-1 border-b-2 font-medium text-sm ${
@@ -438,7 +438,7 @@ export default function FormBuilderPage() {
 
       {/* Forms List Tab */}
       {activeTab === 'list' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {forms.map((form) => (
             <div
               key={form.id}
@@ -513,7 +513,7 @@ export default function FormBuilderPage() {
 
       {/* Builder Tab */}
       {activeTab === 'builder' && (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
           {/* Left Panel - Configuration */}
           <div className="lg:col-span-2 space-y-6">
             {/* Basic Info */}
@@ -599,7 +599,7 @@ export default function FormBuilderPage() {
                         <GripVertical size={16} />
                       </button>
 
-                      <div className="flex-1 grid grid-cols-2 gap-3">
+                      <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <input
                           type="text"
                           value={field.label}
@@ -716,7 +716,7 @@ export default function FormBuilderPage() {
 
           {/* Right Panel - Actions */}
           <div className="space-y-6">
-            <div className="bg-white rounded-lg shadow-md p-6 sticky top-6">
+            <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 lg:sticky lg:top-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Actions</h3>
               <div className="space-y-3">
                 <button
