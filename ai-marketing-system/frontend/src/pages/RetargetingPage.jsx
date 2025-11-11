@@ -380,7 +380,7 @@ export default function RetargetingPage() {
                     type="text"
                     value={audienceForm.name}
                     onChange={(e) => setAudienceForm({ ...audienceForm, name: e.target.value })}
-                    className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
                   />
                 </div>
@@ -393,7 +393,7 @@ export default function RetargetingPage() {
                     value={audienceForm.description}
                     onChange={(e) => setAudienceForm({ ...audienceForm, description: e.target.value })}
                     rows={3}
-                    className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
@@ -405,7 +405,7 @@ export default function RetargetingPage() {
                     <select
                       value={audienceForm.platform}
                       onChange={(e) => setAudienceForm({ ...audienceForm, platform: e.target.value })}
-                      className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                       <option value="meta">Meta (Facebook/Instagram)</option>
                       <option value="google">Google Ads</option>
@@ -420,7 +420,7 @@ export default function RetargetingPage() {
                     <select
                       value={audienceForm.audience_type}
                       onChange={(e) => setAudienceForm({ ...audienceForm, audience_type: e.target.value })}
-                      className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                       <option value="custom">Custom Audience</option>
                       <option value="lookalike">Lookalike Audience</option>
@@ -469,7 +469,7 @@ export default function RetargetingPage() {
                     })}
                     min="1"
                     max="180"
-                    className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <p className="text-xs text-gray-500 mt-1">Target users who performed events in the last X days</p>
                 </div>

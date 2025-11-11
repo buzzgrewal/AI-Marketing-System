@@ -693,13 +693,13 @@ export default function LeadSourcingPage() {
                               type="text"
                               value={field.label}
                               onChange={(e) => updateFormField(field.id, { label: e.target.value })}
-                              className="px-3 py-2 bg-white border border-gray-300 rounded-lg"
+                              className="px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg"
                               placeholder="Field label"
                             />
                             <select
                               value={field.type}
                               onChange={(e) => updateFormField(field.id, { type: e.target.value })}
-                              className="px-3 py-2 bg-white border border-gray-300 rounded-lg"
+                              className="px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg"
                             >
                               <option value="text">Text</option>
                               <option value="email">Email</option>
@@ -711,7 +711,7 @@ export default function LeadSourcingPage() {
                               type="text"
                               value={field.placeholder}
                               onChange={(e) => updateFormField(field.id, { placeholder: e.target.value })}
-                              className="px-3 py-2 bg-white border border-gray-300 rounded-lg"
+                              className="px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg"
                               placeholder="Placeholder text"
                             />
                           </div>

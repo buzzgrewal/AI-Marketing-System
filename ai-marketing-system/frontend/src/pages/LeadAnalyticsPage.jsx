@@ -145,7 +145,7 @@ export default function LeadAnalyticsPage() {
         <select
           value={dateRange}
           onChange={(e) => setDateRange(Number(e.target.value))}
-          className="w-full sm:w-auto px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base bg-white"
+          className="w-full sm:w-auto px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base bg-white text-gray-700"
         >
           <option value={7}>Last 7 Days</option>
           <option value={30}>Last 30 Days</option>

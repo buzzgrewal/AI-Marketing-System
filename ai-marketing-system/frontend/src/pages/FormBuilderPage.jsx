@@ -605,12 +605,12 @@ export default function FormBuilderPage() {
                           value={field.label}
                           onChange={(e) => updateField(index, { label: e.target.value })}
                           placeholder="Field Label"
-                          className="px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm"
+                          className="px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg text-sm"
                         />
                         <select
                           value={field.type}
                           onChange={(e) => updateField(index, { type: e.target.value })}
-                          className="px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm"
+                          className="px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg text-sm"
                         >
                           {FIELD_TYPES.map(ft => (
                             <option key={ft.value} value={ft.value}>{ft.label}</option>
@@ -641,7 +641,7 @@ export default function FormBuilderPage() {
                       value={field.placeholder || ''}
                       onChange={(e) => updateField(index, { placeholder: e.target.value })}
                       placeholder="Placeholder text"
-                      className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm"
+                      className="w-full px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg text-sm"
                     />
                   </div>
                 ))}
@@ -673,7 +673,7 @@ export default function FormBuilderPage() {
                     type="text"
                     value={formConfig.submit_button_text}
                     onChange={(e) => setFormConfig({ ...formConfig, submit_button_text: e.target.value })}
-                    className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg"
+                    className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg"
                   />
                 </div>
 
@@ -685,7 +685,7 @@ export default function FormBuilderPage() {
                     value={formConfig.success_message}
                     onChange={(e) => setFormConfig({ ...formConfig, success_message: e.target.value })}
                     rows={2}
-                    className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg"
+                    className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg"
                   />
                 </div>
 
@@ -785,11 +785,11 @@ export default function FormBuilderPage() {
                   {field.type === 'textarea' ? (
                     <textarea
                       placeholder={field.placeholder}
-                      className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg"
+                      className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg"
                       rows={3}
                     />
                   ) : field.type === 'select' ? (
-                    <select className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg">
+                    <select className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg">
                       <option>Select...</option>
                       {field.options?.map((opt, i) => (
                         <option key={i}>{opt}</option>
@@ -801,7 +801,7 @@ export default function FormBuilderPage() {
                     <input
                       type={field.type}
                       placeholder={field.placeholder}
-                      className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg"
+                      className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg"
                     />
                   )}
                 </div>

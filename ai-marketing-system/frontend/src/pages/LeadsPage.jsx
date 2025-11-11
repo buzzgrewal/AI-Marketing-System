@@ -150,13 +150,13 @@ export default function LeadsPage() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search leads..."
-            className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm sm:text-base"
+            className="w-full pl-10 pr-4 py-2.5 bg-white text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm sm:text-base"
           />
         </div>
         <select
           value={filterSource}
           onChange={(e) => setFilterSource(e.target.value)}
-          className="px-3 sm:px-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm sm:text-base"
+          className="px-3 sm:px-4 py-2.5 bg-white text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm sm:text-base"
         >
           <option value="all">All Sources</option>
           <option value="manual">Manual</option>
@@ -170,7 +170,7 @@ export default function LeadsPage() {
         <select
           value={filterConsent}
           onChange={(e) => setFilterConsent(e.target.value)}
-          className="px-3 sm:px-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm sm:text-base"
+          className="px-3 sm:px-4 py-2.5 bg-white text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm sm:text-base"
         >
           <option value="all">All Leads</option>
           <option value="opted_in">Opted In</option>
@@ -195,7 +195,7 @@ export default function LeadsPage() {
                     setFormData({ ...formData, email: e.target.value })
                   }
                   required
-                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                  className="w-full px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
                 />
               </div>
 
@@ -209,7 +209,7 @@ export default function LeadsPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, first_name: e.target.value })
                   }
-                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                  className="w-full px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
                 />
               </div>
 
@@ -223,7 +223,7 @@ export default function LeadsPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, last_name: e.target.value })
                   }
-                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                  className="w-full px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
                 />
               </div>
 
@@ -237,7 +237,7 @@ export default function LeadsPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, phone: e.target.value })
                   }
-                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                  className="w-full px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
                 />
               </div>
 
@@ -250,7 +250,7 @@ export default function LeadsPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, sport_type: e.target.value })
                   }
-                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                  className="w-full px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
                 >
                   <option value="cycling">Cycling</option>
                   <option value="triathlon">Triathlon</option>
@@ -268,7 +268,7 @@ export default function LeadsPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, customer_type: e.target.value })
                   }
-                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                  className="w-full px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
                 >
                   <option value="athlete">Athlete</option>
                   <option value="coach">Coach</option>
@@ -286,7 +286,7 @@ export default function LeadsPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, source: e.target.value })
                   }
-                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                  className="w-full px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
                 >
                   <option value="manual">Manual Entry</option>
                   <option value="website">Website Form</option>

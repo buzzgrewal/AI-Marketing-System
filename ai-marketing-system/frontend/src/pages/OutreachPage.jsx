@@ -408,7 +408,7 @@ export default function OutreachPage() {
                     type="text"
                     value={sequenceForm.name}
                     onChange={(e) => setSequenceForm({ ...sequenceForm, name: e.target.value })}
-                    className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
                   />
                 </div>
@@ -421,7 +421,7 @@ export default function OutreachPage() {
                     value={sequenceForm.description}
                     onChange={(e) => setSequenceForm({ ...sequenceForm, description: e.target.value })}
                     rows={3}
-                    className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
@@ -432,7 +432,7 @@ export default function OutreachPage() {
                   <select
                     value={sequenceForm.segment_id || ''}
                     onChange={(e) => setSequenceForm({ ...sequenceForm, segment_id: e.target.value ? parseInt(e.target.value) : null })}
-                    className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="">All leads with consent</option>
                     {segments.map(segment => (
@@ -493,7 +493,7 @@ export default function OutreachPage() {
                           value={step.delay_days}
                           onChange={(e) => updateSequenceStep(index, 'delay_days', parseInt(e.target.value))}
                           min="0"
-                          className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                       </div>
 
@@ -504,7 +504,7 @@ export default function OutreachPage() {
                         <select
                           value={step.message_type}
                           onChange={(e) => updateSequenceStep(index, 'message_type', e.target.value)}
-                          className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                           <option value="intro">Introduction</option>
                           <option value="follow_up">Follow-up</option>
@@ -522,7 +522,7 @@ export default function OutreachPage() {
                         type="text"
                         value={step.subject || ''}
                         onChange={(e) => updateSequenceStep(index, 'subject', e.target.value)}
-                        className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
 
@@ -535,7 +535,7 @@ export default function OutreachPage() {
                         onChange={(e) => updateSequenceStep(index, 'template', e.target.value)}
                         rows={2}
                         placeholder="Provide specific instructions for AI message generation..."
-                        className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   </div>
@@ -577,7 +577,7 @@ export default function OutreachPage() {
                 <select
                   value={messageGenerator.lead_id || ''}
                   onChange={(e) => setMessageGenerator({ ...messageGenerator, lead_id: parseInt(e.target.value) })}
-                  className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="">Choose a lead...</option>
                   {leads.map(lead => (
@@ -595,7 +595,7 @@ export default function OutreachPage() {
                 <select
                   value={messageGenerator.message_type}
                   onChange={(e) => setMessageGenerator({ ...messageGenerator, message_type: e.target.value })}
-                  className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="intro">Introduction</option>
                   <option value="follow_up">Follow-up</option>
@@ -613,7 +613,7 @@ export default function OutreachPage() {
                   onChange={(e) => setMessageGenerator({ ...messageGenerator, additional_context: e.target.value })}
                   rows={3}
                   placeholder="Add any specific details or context for the message..."
-                  className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
