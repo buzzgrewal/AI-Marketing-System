@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import { contentAPI, scheduleAPI } from '../services/api'
+import { contentAPI, scheduleAPI, shopifyAPI } from '../services/api'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
-import { Sparkles, Copy, Download, ThumbsUp, RefreshCw, Trash2, Calendar } from 'lucide-react'
+import { Sparkles, Copy, Download, ThumbsUp, RefreshCw, Trash2, Calendar, Store, ShoppingBag } from 'lucide-react'
 
 export default function ContentPage() {
   const navigate = useNavigate()
@@ -27,9 +27,81 @@ export default function ContentPage() {
   
   const [productImagePreview, setProductImagePreview] = useState(null)
 
+  // Shopify state
+  const [shopifyStores, setShopifyStores] = useState([])
+  const [selectedStore, setSelectedStore] = useState(null)
+  const [shopifyProducts, setShopifyProducts] = useState([])
+  const [loadingShopify, setLoadingShopify] = useState(false)
+  const [imageSource, setImageSource] = useState('upload') // 'upload' or 'shopify'
+
   useEffect(() => {
     fetchContents()
   }, [])
+
+  // Fetch Shopify stores when include_image is checked
+  useEffect(() => {
+    if (formData.include_image && shopifyStores.length === 0) {
+      fetchShopifyStores()
+    }
+  }, [formData.include_image])
+
+  // Fetch products when a store is selected
+  useEffect(() => {
+    if (selectedStore) {
+      fetchShopifyProducts(selectedStore)
+    }
+  }, [selectedStore])
+
+  const fetchShopifyStores = async () => {
+    try {
+      const response = await shopifyAPI.getStores()
+      setShopifyStores(response.data || [])
+      // Auto-select first store if available
+      if (response.data && response.data.length > 0) {
+        setSelectedStore(response.data[0].id)
+      }
+    } catch (error) {
+      console.error('Failed to fetch Shopify stores:', error)
+    }
+  }
+
+  const fetchShopifyProducts = async (storeId) => {
+    setLoadingShopify(true)
+    try {
+      const response = await shopifyAPI.getProducts(storeId, 50)
+      setShopifyProducts(response.data.products || [])
+    } catch (error) {
+      console.error('Failed to fetch Shopify products:', error)
+      toast.error('Failed to load Shopify products')
+    } finally {
+      setLoadingShopify(false)
+    }
+  }
+
+  const handleShopifyImageSelect = async (imageUrl, productTitle) => {
+    try {
+      // Fetch the image and convert to base64
+      const response = await fetch(imageUrl)
+      const blob = await response.blob()
+
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        const base64String = e.target.result
+        const base64Data = base64String.split(',')[1]
+
+        setFormData({ ...formData, product_image_base64: base64Data })
+        setProductImagePreview(base64String)
+        toast.success(`Selected: ${productTitle}`)
+      }
+      reader.onerror = () => {
+        toast.error('Failed to load image')
+      }
+      reader.readAsDataURL(blob)
+    } catch (error) {
+      console.error('Failed to fetch Shopify image:', error)
+      toast.error('Failed to load Shopify image')
+    }
+  }
 
   const fetchContents = async () => {
     setLoading(true)
@@ -62,6 +134,7 @@ export default function ContentPage() {
         product_image_base64: null,
       })
       setProductImagePreview(null)
+      setImageSource('upload')
       fetchContents()
     } catch (error) {
       toast.error(error.response?.data?.detail || 'Failed to generate content')
@@ -147,6 +220,7 @@ export default function ContentPage() {
   const handleRemoveImage = () => {
     setFormData({ ...formData, product_image_base64: null })
     setProductImagePreview(null)
+    setImageSource('upload')
     // Reset file input
     const fileInput = document.getElementById('product-image-upload')
     if (fileInput) fileInput.value = ''
@@ -363,12 +437,43 @@ export default function ContentPage() {
                         <span>Upload Your Product Image (Optional)</span>
                       </label>
                     </div>
-                    
+
                     <p className="text-xs text-gray-600">
-                      Upload your own product photo and let AI enhance it with professional backgrounds, lighting, and effects!
+                      Upload your own product photo or select from your Shopify store, and let AI enhance it with professional backgrounds, lighting, and effects!
                     </p>
 
-                    {!productImagePreview ? (
+                    {/* Image Source Tabs */}
+                    <div className="flex gap-2 mt-3">
+                      <button
+                        type="button"
+                        onClick={() => setImageSource('upload')}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                          imageSource === 'upload'
+                            ? 'bg-purple-600 text-white shadow-md'
+                            : 'bg-white text-gray-600 hover:bg-purple-100 border border-purple-200'
+                        }`}
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
+                        Upload
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setImageSource('shopify')}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                          imageSource === 'shopify'
+                            ? 'bg-purple-600 text-white shadow-md'
+                            : 'bg-white text-gray-600 hover:bg-purple-100 border border-purple-200'
+                        }`}
+                      >
+                        <Store size={16} />
+                        Shopify Store
+                      </button>
+                    </div>
+
+                    {/* Upload Tab Content */}
+                    {imageSource === 'upload' && !productImagePreview && (
                       <div className="mt-2">
                         <label
                           htmlFor="product-image-upload"
@@ -404,7 +509,87 @@ export default function ContentPage() {
                           />
                         </label>
                       </div>
-                    ) : (
+                    )}
+
+                    {/* Shopify Tab Content */}
+                    {imageSource === 'shopify' && !productImagePreview && (
+                      <div className="mt-2 space-y-3">
+                        {/* Store Selector */}
+                        {shopifyStores.length > 0 && (
+                          <div>
+                            <label className="block text-xs font-medium text-gray-700 mb-1">
+                              Select Store
+                            </label>
+                            <select
+                              value={selectedStore || ''}
+                              onChange={(e) => setSelectedStore(Number(e.target.value))}
+                              className="w-full px-3 py-2 text-sm border border-purple-200 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                            >
+                              {shopifyStores.map((store) => (
+                                <option key={store.id} value={store.id}>
+                                  {store.name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        )}
+
+                        {/* Products Gallery */}
+                        {loadingShopify ? (
+                          <div className="flex items-center justify-center py-8">
+                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+                            <span className="ml-3 text-sm text-gray-600">Loading products...</span>
+                          </div>
+                        ) : shopifyProducts.length > 0 ? (
+                          <div>
+                            <label className="block text-xs font-medium text-gray-700 mb-2">
+                              Select a Product Image ({shopifyProducts.filter(p => p.images?.length > 0).length} products with images)
+                            </label>
+                            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 max-h-64 overflow-y-auto p-2 bg-white rounded-lg border border-purple-200">
+                              {shopifyProducts
+                                .filter((product) => product.images && product.images.length > 0)
+                                .map((product) => (
+                                  <button
+                                    key={product.id}
+                                    type="button"
+                                    onClick={() => handleShopifyImageSelect(product.images[0].src, product.title)}
+                                    className="group relative aspect-square rounded-lg overflow-hidden border-2 border-transparent hover:border-purple-500 transition-all focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                    title={product.title}
+                                  >
+                                    <img
+                                      src={product.images[0].src}
+                                      alt={product.title}
+                                      className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                      <div className="absolute bottom-0 left-0 right-0 p-1">
+                                        <p className="text-white text-xs truncate font-medium">
+                                          {product.title}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </button>
+                                ))}
+                            </div>
+                          </div>
+                        ) : shopifyStores.length === 0 ? (
+                          <div className="text-center py-6 bg-white rounded-lg border border-purple-200">
+                            <Store className="mx-auto h-10 w-10 text-gray-400 mb-2" />
+                            <p className="text-sm text-gray-600">No Shopify stores connected</p>
+                            <p className="text-xs text-gray-500 mt-1">Connect a Shopify store to select product images</p>
+                          </div>
+                        ) : (
+                          <div className="text-center py-6 bg-white rounded-lg border border-purple-200">
+                            <ShoppingBag className="mx-auto h-10 w-10 text-gray-400 mb-2" />
+                            <p className="text-sm text-gray-600">No products with images found</p>
+                            <p className="text-xs text-gray-500 mt-1">Add product images in your Shopify store</p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Selected Image Preview (shown for both tabs) */}
+                    {productImagePreview && (
                       <div className="mt-2 relative">
                         <img
                           src={productImagePreview}

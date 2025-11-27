@@ -78,4 +78,6 @@ logs/
 # OS
 Thumbs.db
 
+# Images
+/data/uploads/*
 

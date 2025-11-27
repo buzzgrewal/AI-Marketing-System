@@ -324,4 +324,14 @@ export const metaABTestsAPI = {
   declareWinner: (id, data) => api.post(`/api/meta-ab-tests/${id}/declare-winner`, data),
 }
 
+// Shopify API
+export const shopifyAPI = {
+  getStores: () => api.get('/api/shopify/stores'),
+  getStoreInfo: (storeId) => api.get(`/api/shopify/stores/${storeId}`),
+  getProducts: (storeId, limit = 50) => api.get(`/api/shopify/stores/${storeId}/products`, { params: { limit } }),
+  getCustomers: (storeId, limit = 50) => api.get(`/api/shopify/stores/${storeId}/customers`, { params: { limit } }),
+  auditStore: (storeId) => api.get(`/api/shopify/stores/${storeId}/audit`),
+  syncCustomers: (storeId) => api.post(`/api/shopify/stores/${storeId}/sync-customers`),
+}
+
 export default api
