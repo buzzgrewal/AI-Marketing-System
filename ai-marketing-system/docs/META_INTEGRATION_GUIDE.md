@@ -69,8 +69,6 @@ Add your credentials to `backend/.env`:
 
 ```bash
 # Meta/Facebook Configuration
-META_APP_ID=1145155901127075
-META_APP_SECRET=7150f697cdab8685c34c00ed1897aea4
 META_ACCESS_TOKEN=YOUR_PAGE_ACCESS_TOKEN_HERE
 META_PIXEL_ID=  # Optional: For tracking (see Step 5)
 ```
